@@ -17,34 +17,13 @@ Place, Fifth Floor, Boston, MA  02110 - 1301  USA
 
 #define GLM_FORCE_RADIANS
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <stdlib.h>
-#include <stdio.h>
-#include <iostream>
-#include "constants.h"
-#include "allmodels.h"
-#include "lodepng.h"
-#include "shaderprogram.h"
-#include "myCube.h"
+#include "headers.h"
+#include "wine.h"
 
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
+Wine wine;
 
 float speed_x = 0;
 float speed_y = 0;
-
-std::vector<glm::vec4> vertexes;
-std::vector<glm::vec4> normals;
-std::vector<glm::vec2> texCoords; //moga miec rozne rozmiary
-std::vector<unsigned int> indices; //mowi co z tych indeksow naprawde budujemy 
-std::vector<std::vector<glm::mat4>> position;
-
-GLuint tex;
 
 using namespace std;
 
@@ -80,58 +59,6 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	}
 }
 
-//Procedura wczytująca teksturę
-GLuint readTexture(const char* filename) {
-	GLuint tex;
-
-	glActiveTexture(GL_TEXTURE0);
-
-	std::vector<unsigned char> image;
-	unsigned width, height;
-	unsigned error = lodepng::decode(image, width, height, filename);
-
-	glGenTextures(1, &tex);
-	glBindTexture(GL_TEXTURE_2D, tex);
-	glTexImage2D(GL_TEXTURE_2D, 0, 4, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, (unsigned char*)image.data());
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	return tex;
-}
-
-void loadModel(std::string plik) {
-	using namespace std;
-	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(plik,
-		aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals);
-
-	//trzeba stworzyc klase obiekt 3d z odpowiednimi polami
-
-	cout << importer.GetErrorString() << endl;
-
-	aiMesh* mesh = scene->mMeshes[0]; //pobranie wskaznika na mesh ktory bdmy przegladac
-
-	for (int i = 0; i < mesh->mNumVertices; i++) {
-		aiVector3D vertex = mesh->mVertices[i];
-		vertexes.push_back(glm::vec4(vertex.x, vertex.y, vertex.z, 1));
-
-		aiVector3D normal = mesh->mNormals[i];
-		normals.push_back(glm::vec4(normal.x, normal.y, normal.z, 0));
-
-		aiVector3D texCoord = mesh->mTextureCoords[0][i]; //numer zestawu, numer wierzcholka
-		texCoords.push_back(glm::vec2(texCoord.x, texCoord.y));
-	}//czytanie wspolrzednych itp
-
-	//dla kazdego wielokata skladowego
-	for (int i = 0; i < mesh->mNumFaces; i++) {
-		aiFace& face = mesh->mFaces[i]; //face to jeden z wielokatow siatki 
-
-		for (int j = 0; j < face.mNumIndices; j++) {
-			indices.push_back(face.mIndices[j]);
-		}
-	}
-}
 
 //Procedura inicjująca
 void initOpenGLProgram(GLFWwindow* window) {
@@ -140,14 +67,14 @@ void initOpenGLProgram(GLFWwindow* window) {
 	glClearColor(0, 0, 0, 1);
 	glEnable(GL_DEPTH_TEST);
 
-	tex = readTexture("./creeper/AA1.png");
-	loadModel("./creeper/Minecraft_Creeper.fbx");
+	wine.readTexture("./creeper/AA1.png");
+	wine.loadModel("./creeper/Minecraft_Creeper.fbx");
 }
 
 //Zwolnienie zasobów zajętych przez program
 void freeOpenGLProgram(GLFWwindow* window) {
 	freeShaders();
-	glDeleteTextures(1, &tex);
+	glDeleteTextures(1, &wine.texture);
 }
 
 //Procedura rysująca zawartość sceny
@@ -171,30 +98,7 @@ void drawScene(GLFWwindow* window, float angle_x, float angle_y) {
 	M = glm::rotate(M, angle_y, glm::vec3(0.0f, 1.0f, 0.0f));
 	M = glm::rotate(M, angle_x, glm::vec3(1.0f, 0.0f, 0.0f));
 
-	glUniformMatrix4fv(spLambertTextured->u("M"), 1, false, glm::value_ptr(M));
-
-	int vertexCount = 36;
-
-	glEnableVertexAttribArray(spLambertTextured->a("vertex"));
-	glVertexAttribPointer(spLambertTextured->a("vertex"), 4, GL_FLOAT, false, 0, vertexes.data());
-
-	glEnableVertexAttribArray(spLambertTextured->a("normal"));
-	glVertexAttribPointer(spLambertTextured->a("normal"), 4, GL_FLOAT, false, 0, normals.data());
-
-	glEnableVertexAttribArray(spLambertTextured->a("texCoord"));
-	glVertexAttribPointer(spLambertTextured->a("texCoord"), 2, GL_FLOAT, false, 0, texCoords.data());
-
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, tex);
-	glUniform1i(spLambertTextured->u("tex"), 0);
-
-	//glDrawArrays(GL_TRIANGLES, 0, vertexCount);
-
-	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, indices.data());
-
-	glDisableVertexAttribArray(spLambertTextured->a("vertex"));
-	glDisableVertexAttribArray(spLambertTextured->a("normal"));
-	glDisableVertexAttribArray(spLambertTextured->a("texCoord"));
+	wine.drawModel(M);
 
 	glfwSwapBuffers(window);
 }
