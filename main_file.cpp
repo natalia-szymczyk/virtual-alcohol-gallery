@@ -67,8 +67,8 @@ void initOpenGLProgram(GLFWwindow* window) {
 	glClearColor(0, 0, 0, 1);
 	glEnable(GL_DEPTH_TEST);
 
-	wine.readTexture("./creeper/AA1.png");
-	wine.loadModel("./creeper/Minecraft_Creeper.fbx");
+	wine.readTexture("./wine/AA1.png");
+	wine.loadModel("./wine/wine_xd.fbx");
 }
 
 //Zwolnienie zasobów zajętych przez program
