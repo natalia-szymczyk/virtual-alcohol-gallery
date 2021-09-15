@@ -46,6 +46,8 @@ void Wine::loadModel(std::string plik) {
 
 void Wine::drawModel(glm::mat4 M) {
 
+	M = glm::scale(M, glm::vec3(0.006f, 0.006f, 0.006f));
+
 	glUniformMatrix4fv(spLambertTextured->u("M"), 1, false, glm::value_ptr(M));
 
 	glEnableVertexAttribArray(spLambertTextured->a("vertex"));

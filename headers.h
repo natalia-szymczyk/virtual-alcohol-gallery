@@ -9,6 +9,7 @@
 #include "constants.h"
 #include "lodepng.h"
 #include "shaderprogram.h"
+#include "model.h"
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>

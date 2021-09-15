@@ -19,6 +19,7 @@ Place, Fifth Floor, Boston, MA  02110 - 1301  USA
 
 #include "headers.h"
 #include "wine.h"
+std::vector<Model*> models;
 
 Wine wine;
 
@@ -64,11 +65,20 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 void initOpenGLProgram(GLFWwindow* window) {
 	initShaders();
 	glfwSetKeyCallback(window, key_callback);
-	glClearColor(0, 0, 0, 1);
+	glClearColor(1, 1, 1, 1);
 	glEnable(GL_DEPTH_TEST);
 
-	wine.readTexture("./wine/AA1.png");
-	wine.loadModel("./wine/wine_xd.fbx");
+	glm::mat4 M = glm::mat4(1.0f); //Zainicjuj macierz modelu macierzą jednostkową
+
+	glm::mat4 M1 = glm::rotate(M, PI, glm::vec3(0.0f, 0.0f, 1.0f));
+	//glm::mat4 M1 = glm::mat4(1.0f);
+	M1 = glm::scale(M1, glm::vec3(3.5, 3.5, 3.5));
+
+	models.push_back(new Model("barrel.fbx", M1));
+
+
+	//wine.readTexture("./wine/color.png");
+	//wine.loadModel("./wine/school.fbx");
 }
 
 //Zwolnienie zasobów zajętych przez program
@@ -85,7 +95,7 @@ void drawScene(GLFWwindow* window, float angle_x, float angle_y) {
 
 	glm::mat4 P = glm::perspective(glm::radians(50.0f), 1.0f, 1.0f, 50.0f);
 	glm::mat4 V = glm::lookAt(
-		glm::vec3(0.0f, 0.0f, -12.0f),
+		glm::vec3(0.0f, 0.0f, -30.0f),
 		glm::vec3(0.0f, 0.0f, 0.0f),
 		glm::vec3(0.0f, 1.0f, 0.0f)
 	);
@@ -98,7 +108,10 @@ void drawScene(GLFWwindow* window, float angle_x, float angle_y) {
 	M = glm::rotate(M, angle_y, glm::vec3(0.0f, 1.0f, 0.0f));
 	M = glm::rotate(M, angle_x, glm::vec3(1.0f, 0.0f, 0.0f));
 
-	wine.drawModel(M);
+	//wine.drawModel(M);
+	for (auto model : models) {
+		model->draw(glm::value_ptr(V), glm::value_ptr(P));
+	}
 
 	glfwSwapBuffers(window);
 }
