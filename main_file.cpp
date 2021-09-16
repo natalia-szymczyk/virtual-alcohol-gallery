@@ -59,8 +59,8 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	if (action == GLFW_PRESS) {
 		if (key == GLFW_KEY_LEFT) speed_y = 1;
 		if (key == GLFW_KEY_RIGHT) speed_y = -1;
-		if (key == GLFW_KEY_PAGE_UP) speed_x = 1;
-		if (key == GLFW_KEY_PAGE_DOWN) speed_x = -1;
+		if (key == GLFW_KEY_PAGE_UP) speed_x = -1;
+		if (key == GLFW_KEY_PAGE_DOWN) speed_x = 1;
 		if (key == GLFW_KEY_UP) walk_speed = 10;
 		if (key == GLFW_KEY_DOWN) walk_speed = -10;
 
@@ -85,11 +85,11 @@ void initOpenGLProgram(GLFWwindow* window) {
 
 	glm::mat4 M = glm::mat4(1.0f); //Zainicjuj macierz modelu macierzą jednostkową
 
-	//glm::mat4 M1 = glm::mat4(1.0f);
-	glm::mat4 M1 = glm::rotate(M, PI, glm::vec3(0.0f, 1.0f, 0.0f));
+	glm::mat4 M1 = glm::mat4(1.0f);
+	//glm::mat4 M1 = glm::rotate(M, PI/2, glm::vec3(1.0f, 0.0f, 0.0f));
 	//M1 = glm::rotate(M1, PI / 2, glm::vec3(0.0f, 1.0f, 0.0f));
-	//M1 = glm::rotate(M1, PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
-	M1 = glm::scale(M1, glm::vec3(0.2, 0.2, 0.2));
+	//M1 = glm::rotate(M1, PI, glm::vec3(0.0f, 1.0f, 0.0f));
+	M1 = glm::scale(M1, glm::vec3(0.01, 0.01, 0.01));
 
 	for (int i = 0; i <= 3; i++) {
 		for (int j = 0; j <= 3; j++) {
@@ -98,7 +98,7 @@ void initOpenGLProgram(GLFWwindow* window) {
 		cout << endl;
 	}
 
-	models.push_back(new Model("sofa.fbx", M1));
+	models.push_back(new Model("glasses.fbx", M1));
 
 
 	//wine.readTexture("./textures/barrel/barrel.png");
