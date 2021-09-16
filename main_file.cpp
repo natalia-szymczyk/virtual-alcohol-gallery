@@ -21,6 +21,13 @@ Place, Fifth Floor, Boston, MA  02110 - 1301  USA
 #include "wine.h"
 std::vector<Model*> models;
 
+std::vector<glm::vec3> lightPos = {
+	glm::vec3(-0.01f, 0.0f, 0.0f),
+	glm::vec3(0.0f, 0.0f, 0.0f),
+	glm::vec3(0.0f, 0.0f, -0.01f),
+	glm::vec3(0.0f, 0.0f, 0.0f)
+};
+
 Wine wine;
 
 float speed_x = 0; //[radiany/s]
@@ -70,16 +77,23 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 void initOpenGLProgram(GLFWwindow* window) {
 	initShaders();
 	glfwSetKeyCallback(window, key_callback);
-	glClearColor(1, 1, 1, 1);
+	glClearColor(0, 0, 0, 1);
 	glEnable(GL_DEPTH_TEST);
 
 	glm::mat4 M = glm::mat4(1.0f); //Zainicjuj macierz modelu macierzą jednostkową
 
 	glm::mat4 M1 = glm::rotate(M, PI, glm::vec3(0.0f, 0.0f, 1.0f));
 	//glm::mat4 M1 = glm::mat4(1.0f);
-	M1 = glm::scale(M1, glm::vec3(1.5, 1.5, 1.5));
+	M1 = glm::scale(M1, glm::vec3(0.01, 0.01, 0.01));
 
-	models.push_back(new Model("road.fbx", M1));
+	for (int i = 0; i <= 3; i++) {
+		for (int j = 0; j <= 3; j++) {
+			cout << " " << M1[i][j] << " ";
+		}
+		cout << endl;
+	}
+
+	models.push_back(new Model("floor.fbx", M1));
 
 
 	//wine.readTexture("./wine/color.png");
@@ -96,7 +110,12 @@ void freeOpenGLProgram(GLFWwindow* window) {
 void drawScene(GLFWwindow* window, float kat_x, float kat_y) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	printf("%f %f %f\n", pos.x, pos.y, pos.z);
+	//printf("%f %f %f\n", pos.x, pos.y, pos.z);
+	
+	glm::vec4 lightPosition1 = glm::vec4(lightPos[0], 1.f);
+	glm::vec4 lightPosition2 = glm::vec4(lightPos[1], 1.f);
+	glm::vec4 lightPosition3 = glm::vec4(lightPos[2], 1.f);
+	glm::vec4 lightPosition4 = glm::vec4(lightPos[3], 1.f);
 
 	glm::mat4 V = glm::lookAt(pos, pos + calcDir(kat_x, kat_y), glm::vec3(0.0f, 1.0f, 0.0f)); //Wylicz macierz widoku
 	glm::mat4 P = glm::perspective(glm::radians(50.0f), 1.0f, 0.1f, 50.0f); //Wylicz macierz rzutowania
@@ -105,6 +124,11 @@ void drawScene(GLFWwindow* window, float kat_x, float kat_y) {
 
 	glUniformMatrix4fv(spLambertTextured->u("P"), 1, false, glm::value_ptr(P));
 	glUniformMatrix4fv(spLambertTextured->u("V"), 1, false, glm::value_ptr(V));
+
+	glUniform4fv(spLambertTextured->u("lpos1"), 1, glm::value_ptr(lightPosition1));
+	glUniform4fv(spLambertTextured->u("lpos2"), 1, glm::value_ptr(lightPosition2));
+	glUniform4fv(spLambertTextured->u("lpos3"), 1, glm::value_ptr(lightPosition3));
+	glUniform4fv(spLambertTextured->u("lpos4"), 1, glm::value_ptr(lightPosition4));
 
 	glm::mat4 M = glm::mat4(1.0f);
 
