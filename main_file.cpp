@@ -36,6 +36,9 @@ float walk_speed = 0;
 
 glm::vec3 pos = glm::vec3(0, 2, -11);
 
+int height = 720;
+int width = 1280;
+
 using namespace std;
 
 glm::vec3 calcDir(float kat_x, float kat_y) {
@@ -58,8 +61,8 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		if (key == GLFW_KEY_RIGHT) speed_y = -1;
 		if (key == GLFW_KEY_PAGE_UP) speed_x = 1;
 		if (key == GLFW_KEY_PAGE_DOWN) speed_x = -1;
-		if (key == GLFW_KEY_UP) walk_speed = 2;
-		if (key == GLFW_KEY_DOWN) walk_speed = -2;
+		if (key == GLFW_KEY_UP) walk_speed = 10;
+		if (key == GLFW_KEY_DOWN) walk_speed = -10;
 
 	}
 	if (action == GLFW_RELEASE) {
@@ -77,14 +80,16 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 void initOpenGLProgram(GLFWwindow* window) {
 	initShaders();
 	glfwSetKeyCallback(window, key_callback);
-	glClearColor(0, 0, 0, 1);
+	glClearColor(1, 1, 1, 1);
 	glEnable(GL_DEPTH_TEST);
 
 	glm::mat4 M = glm::mat4(1.0f); //Zainicjuj macierz modelu macierzą jednostkową
 
-	glm::mat4 M1 = glm::rotate(M, PI, glm::vec3(0.0f, 0.0f, 1.0f));
 	//glm::mat4 M1 = glm::mat4(1.0f);
-	M1 = glm::scale(M1, glm::vec3(0.01, 0.01, 0.01));
+	glm::mat4 M1 = glm::rotate(M, PI, glm::vec3(0.0f, 1.0f, 0.0f));
+	//M1 = glm::rotate(M1, PI / 2, glm::vec3(0.0f, 1.0f, 0.0f));
+	//M1 = glm::rotate(M1, PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
+	M1 = glm::scale(M1, glm::vec3(0.2, 0.2, 0.2));
 
 	for (int i = 0; i <= 3; i++) {
 		for (int j = 0; j <= 3; j++) {
@@ -93,11 +98,11 @@ void initOpenGLProgram(GLFWwindow* window) {
 		cout << endl;
 	}
 
-	models.push_back(new Model("floor.fbx", M1));
+	models.push_back(new Model("sofa.fbx", M1));
 
 
-	//wine.readTexture("./wine/color.png");
-	//wine.loadModel("./wine/school.fbx");
+	//wine.readTexture("./textures/barrel/barrel.png");
+	//wine.loadModel("./barrel.fbx");
 }
 
 //Zwolnienie zasobów zajętych przez program
@@ -118,7 +123,7 @@ void drawScene(GLFWwindow* window, float kat_x, float kat_y) {
 	glm::vec4 lightPosition4 = glm::vec4(lightPos[3], 1.f);
 
 	glm::mat4 V = glm::lookAt(pos, pos + calcDir(kat_x, kat_y), glm::vec3(0.0f, 1.0f, 0.0f)); //Wylicz macierz widoku
-	glm::mat4 P = glm::perspective(glm::radians(50.0f), 1.0f, 0.1f, 50.0f); //Wylicz macierz rzutowania
+	glm::mat4 P = glm::perspective(glm::radians(50.0f), 1.0f, 0.1f, 500.0f); //Wylicz macierz rzutowania
 
 	spLambertTextured->use();
 
@@ -155,7 +160,7 @@ int main(void) {
 		exit(EXIT_FAILURE);
 	}
 
-	window = glfwCreateWindow(500, 500, "OpenGL", NULL, NULL);
+	window = glfwCreateWindow(width, height, "Alcohol Gallery", NULL, NULL);
 
 	if (!window) {
 		fprintf(stderr, "Nie można utworzyć okna.\n");
