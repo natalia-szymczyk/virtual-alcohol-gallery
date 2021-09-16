@@ -74,7 +74,7 @@ void initOpenGLProgram(GLFWwindow* window) {
 	//glm::mat4 M1 = glm::mat4(1.0f);
 	M1 = glm::scale(M1, glm::vec3(3.5, 3.5, 3.5));
 
-	models.push_back(new Model("barrel.fbx", M1));
+	models.push_back(new Model("road.fbx", M1));
 
 
 	//wine.readTexture("./wine/color.png");
