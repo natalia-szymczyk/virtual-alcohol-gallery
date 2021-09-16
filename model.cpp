@@ -146,15 +146,15 @@ void Model::draw(glm::f32* V, glm::f32* P) {
 
 		spLambertTextured->use();
 
-		glm::mat4 P = glm::perspective(glm::radians(50.0f), 1.0f, 1.0f, 50.0f);
-		glm::mat4 V = glm::lookAt(
-			glm::vec3(0.0f, 0.0f, -30.0f),
-			glm::vec3(0.0f, 0.0f, 0.0f),
-			glm::vec3(0.0f, 1.0f, 0.0f)
-		);
+		//glm::mat4 P = glm::perspective(glm::radians(50.0f), 1.0f, 1.0f, 50.0f);
+		//glm::mat4 V = glm::lookAt(
+		//	glm::vec3(0.0f, 0.0f, -30.0f),
+		//	glm::vec3(0.0f, 0.0f, 0.0f),
+		//	glm::vec3(0.0f, 1.0f, 0.0f)
+		//);
 
-		glUniformMatrix4fv(spLambertTextured->u("P"), 1, false, glm::value_ptr(P));
-		glUniformMatrix4fv(spLambertTextured->u("V"), 1, false, glm::value_ptr(V));
+		glUniformMatrix4fv(spLambertTextured->u("P"), 1, false, P);
+		glUniformMatrix4fv(spLambertTextured->u("V"), 1, false, V);
 		glUniformMatrix4fv(spLambertTextured->u("M"), 1, false, glm::value_ptr(M));
 
 		glEnableVertexAttribArray(spLambertTextured->a("vertex"));

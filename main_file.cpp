@@ -23,10 +23,21 @@ std::vector<Model*> models;
 
 Wine wine;
 
-float speed_x = 0;
-float speed_y = 0;
+float speed_x = 0; //[radiany/s]
+float speed_y = 0; //[radiany/s]
+float walk_speed = 0;
+
+glm::vec3 pos = glm::vec3(0, 2, -11);
 
 using namespace std;
+
+glm::vec3 calcDir(float kat_x, float kat_y) {
+	glm::vec4 dir = glm::vec4(0, 0, 1, 0);
+	glm::mat4 M = glm::rotate(glm::mat4(1.0f), kat_y, glm::vec3(0, 1, 0));
+	M = glm::rotate(M, kat_x, glm::vec3(1, 0, 0));
+	dir = M * dir;
+	return glm::vec3(dir);
+}
 
 //Procedura obsługi błędów
 void error_callback(int error, const char* description) {
@@ -36,27 +47,21 @@ void error_callback(int error, const char* description) {
 //Procedura obsługi klawiatury
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod) {
 	if (action == GLFW_PRESS) {
-		if (key == GLFW_KEY_LEFT) {
-			speed_y = -PI;
-		}
-		if (key == GLFW_KEY_RIGHT) {
-			speed_y = PI;
-		}
-		if (key == GLFW_KEY_UP) {
-			speed_x = -PI;
-		}
-		if (key == GLFW_KEY_DOWN) {
-			speed_x = PI;
-		}
-	}
+		if (key == GLFW_KEY_LEFT) speed_y = 1;
+		if (key == GLFW_KEY_RIGHT) speed_y = -1;
+		if (key == GLFW_KEY_PAGE_UP) speed_x = 1;
+		if (key == GLFW_KEY_PAGE_DOWN) speed_x = -1;
+		if (key == GLFW_KEY_UP) walk_speed = 2;
+		if (key == GLFW_KEY_DOWN) walk_speed = -2;
 
+	}
 	if (action == GLFW_RELEASE) {
-		if (key == GLFW_KEY_LEFT || key == GLFW_KEY_RIGHT) {
-			speed_y = 0;
-		}
-		if (key == GLFW_KEY_UP || key == GLFW_KEY_DOWN) {
-			speed_x = 0;
-		}
+		if (key == GLFW_KEY_LEFT) speed_y = 0;
+		if (key == GLFW_KEY_RIGHT) speed_y = 0;
+		if (key == GLFW_KEY_PAGE_UP) speed_x = 0;
+		if (key == GLFW_KEY_PAGE_DOWN) speed_x = 0;
+		if (key == GLFW_KEY_UP) walk_speed = 0;
+		if (key == GLFW_KEY_DOWN) walk_speed = 0;
 	}
 }
 
@@ -72,7 +77,7 @@ void initOpenGLProgram(GLFWwindow* window) {
 
 	glm::mat4 M1 = glm::rotate(M, PI, glm::vec3(0.0f, 0.0f, 1.0f));
 	//glm::mat4 M1 = glm::mat4(1.0f);
-	M1 = glm::scale(M1, glm::vec3(3.5, 3.5, 3.5));
+	M1 = glm::scale(M1, glm::vec3(1.5, 1.5, 1.5));
 
 	models.push_back(new Model("road.fbx", M1));
 
@@ -88,27 +93,27 @@ void freeOpenGLProgram(GLFWwindow* window) {
 }
 
 //Procedura rysująca zawartość sceny
-void drawScene(GLFWwindow* window, float angle_x, float angle_y) {
+void drawScene(GLFWwindow* window, float kat_x, float kat_y) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	spLambertTextured->use();
+	printf("%f %f %f\n", pos.x, pos.y, pos.z);
 
-	glm::mat4 P = glm::perspective(glm::radians(50.0f), 1.0f, 1.0f, 50.0f);
-	glm::mat4 V = glm::lookAt(
-		glm::vec3(0.0f, 0.0f, -30.0f),
-		glm::vec3(0.0f, 0.0f, 0.0f),
-		glm::vec3(0.0f, 1.0f, 0.0f)
-	);
+	glm::mat4 V = glm::lookAt(pos, pos + calcDir(kat_x, kat_y), glm::vec3(0.0f, 1.0f, 0.0f)); //Wylicz macierz widoku
+	glm::mat4 P = glm::perspective(glm::radians(50.0f), 1.0f, 0.1f, 50.0f); //Wylicz macierz rzutowania
+
+	spLambertTextured->use();
 
 	glUniformMatrix4fv(spLambertTextured->u("P"), 1, false, glm::value_ptr(P));
 	glUniformMatrix4fv(spLambertTextured->u("V"), 1, false, glm::value_ptr(V));
 
 	glm::mat4 M = glm::mat4(1.0f);
 
-	M = glm::rotate(M, angle_y, glm::vec3(0.0f, 1.0f, 0.0f));
-	M = glm::rotate(M, angle_x, glm::vec3(1.0f, 0.0f, 0.0f));
+	//M = glm::rotate(M, angle_y, glm::vec3(0.0f, 1.0f, 0.0f));
+	//M = glm::rotate(M, angle_x, glm::vec3(1.0f, 0.0f, 0.0f));
 
 	//wine.drawModel(M);
+
+
 	for (auto model : models) {
 		model->draw(glm::value_ptr(V), glm::value_ptr(P));
 	}
@@ -144,18 +149,18 @@ int main(void) {
 
 	initOpenGLProgram(window);
 
-	float angle_x = 0;
-	float angle_y = 0;
-
-	glfwSetTime(0);
-
-	while (!glfwWindowShouldClose(window)) {
-		angle_x = angle_x + speed_x * glfwGetTime();
-		angle_y = angle_y + speed_y * glfwGetTime();
-
-		glfwSetTime(0);
-		drawScene(window, angle_x, angle_y);
-		glfwPollEvents();
+	float angle = 0; //zadeklaruj zmienną przechowującą aktualny kąt obrotu
+	float kat_x = 0;
+	float kat_y = 0;
+	glfwSetTime(0); //Wyzeruj licznik czasu
+	while (!glfwWindowShouldClose(window)) //Tak długo jak okno nie powinno zostać zamknięte
+	{
+		kat_x += speed_x * glfwGetTime();
+		kat_y += speed_y * glfwGetTime();
+		pos += (float)(walk_speed * glfwGetTime()) * calcDir(kat_x, kat_y);
+		glfwSetTime(0); //Wyzeruj licznik czasu
+		drawScene(window, kat_x, kat_y); //Wykonaj procedurę rysującą
+		glfwPollEvents(); //Wykonaj procedury callback w zalezności od zdarzeń jakie zaszły.
 	}
 
 	freeOpenGLProgram(window);
