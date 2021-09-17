@@ -85,8 +85,8 @@ void initOpenGLProgram(GLFWwindow* window) {
 
 	glm::mat4 M = glm::mat4(1.0f); //Zainicjuj macierz modelu macierzą jednostkową
 
-	glm::mat4 M1 = glm::mat4(1.0f);
-	//glm::mat4 M1 = glm::rotate(M, PI/2, glm::vec3(1.0f, 0.0f, 0.0f));
+	//glm::mat4 M1 = glm::mat4(1.0f);
+	glm::mat4 M1 = glm::rotate(M, PI/2, glm::vec3(1.0f, 0.0f, .0f));
 	//M1 = glm::rotate(M1, PI / 2, glm::vec3(0.0f, 1.0f, 0.0f));
 	//M1 = glm::rotate(M1, PI, glm::vec3(0.0f, 1.0f, 0.0f));
 	M1 = glm::scale(M1, glm::vec3(0.01, 0.01, 0.01));
@@ -98,7 +98,7 @@ void initOpenGLProgram(GLFWwindow* window) {
 		cout << endl;
 	}
 
-	models.push_back(new Model("glasses.fbx", M1));
+	models.push_back(new Model("test.fbx", M1));
 
 
 	//wine.readTexture("./textures/barrel/barrel.png");
