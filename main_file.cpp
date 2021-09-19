@@ -61,8 +61,8 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		if (key == GLFW_KEY_RIGHT) speed_y = -1;
 		if (key == GLFW_KEY_PAGE_UP) speed_x = -1;
 		if (key == GLFW_KEY_PAGE_DOWN) speed_x = 1;
-		if (key == GLFW_KEY_UP) walk_speed = 10;
-		if (key == GLFW_KEY_DOWN) walk_speed = -10;
+		if (key == GLFW_KEY_UP) walk_speed = 50;
+		if (key == GLFW_KEY_DOWN) walk_speed = -50;
 
 	}
 	if (action == GLFW_RELEASE) {
@@ -85,11 +85,11 @@ void initOpenGLProgram(GLFWwindow* window) {
 
 	glm::mat4 M = glm::mat4(1.0f); //Zainicjuj macierz modelu macierzą jednostkową
 
-	//glm::mat4 M1 = glm::mat4(1.0f);
-	glm::mat4 M1 = glm::rotate(M, PI/2, glm::vec3(1.0f, 0.0f, .0f));
+	glm::mat4 M1 = M;
+	//glm::mat4 M1 = glm::rotate(M, PI, glm::vec3(1.0f, 0.0f, 0.0f));
 	//M1 = glm::rotate(M1, PI / 2, glm::vec3(0.0f, 1.0f, 0.0f));
 	//M1 = glm::rotate(M1, PI, glm::vec3(0.0f, 1.0f, 0.0f));
-	M1 = glm::scale(M1, glm::vec3(0.01, 0.01, 0.01));
+	M1 = glm::scale(M1, glm::vec3(0.8, 0.8, 0.8));
 
 	for (int i = 0; i <= 3; i++) {
 		for (int j = 0; j <= 3; j++) {
@@ -98,11 +98,100 @@ void initOpenGLProgram(GLFWwindow* window) {
 		cout << endl;
 	}
 
-	models.push_back(new Model("test.fbx", M1));
+	//models.push_back(new Model("floor.fbx", M1));
+
+	glm::mat4 M2 = M;
+	M2 = glm::scale(M2, glm::vec3(0.05, 0.05, 0.05));
+	M2 = glm::rotate(M2, PI, glm::vec3(0.0f, 1.0f, 0.0f));
+	M2 = glm::rotate(M2, -PI/2, glm::vec3(1.0f, 0.0f, 0.0f));
+
+	//models.push_back(new Model("sofa.fbx", M2));
+
+	glm::mat4 M3 = M;
+	M3 = glm::rotate(M3, PI/2, glm::vec3(1.0f, 0.0f, 0.0f));
+
+	//models.push_back(new Model("barrel.fbx", M3));
+
+	glm::mat4 M4 = M;
+	//M4 = glm::rotate(M4, PI / 2, glm::vec3(0.0f, 1.0f, 0.0f));//error w lodepng 4643
+	M4 = glm::scale(M4, glm::vec3(0.01, 0.01, 0.01));
+
+	//models.push_back(new Model("barrel_2.fbx", M4));
+
+	glm::mat4 M5 = M;
+	M5 = glm::rotate(M5, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+	M5 = glm::scale(M5, glm::vec3(10, 10, 10));
+
+	//models.push_back(new Model("bottle_beer.fbx", M5));
+
+	glm::mat4 M6 = M;
+	M6 = glm::rotate(M6, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+
+	//models.push_back(new Model("bottle_wine.fbx", M6));
+
+	glm::mat4 M7 = M;
+	M7 = glm::rotate(M7, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+	M7 = glm::scale(M7, glm::vec3(0.010, 0.010, 0.010));
+
+	//models.push_back(new Model("bottle_wine_2.fbx", M7));
+
+	glm::mat4 M8 = M;
+	M8 = glm::scale(M8, glm::vec3(0.010, 0.010, 0.010));
+
+	//models.push_back(new Model("bottles.fbx", M8));
+
+	glm::mat4 M9 = M;
+	M9 = glm::rotate(M9, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+	M9 = glm::rotate(M9, PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
+	M9 = glm::scale(M9, glm::vec3(0.10, 0.10, 0.10));
+
+	//models.push_back(new Model("distiller.fbx", M9));
+
+	glm::mat4 M10 = M;
+	M10 = glm::scale(M10, glm::vec3(0.05, 0.05, 0.05));
+
+	//models.push_back(new Model("flower.fbx", M10)); //poprawic kolory
+
+	glm::mat4 M11 = M;
+	M11 = glm::rotate(M11, PI / 2, glm::vec3(0.0f, 1.0f, 0.0f));
+	M11 = glm::scale(M11, glm::vec3(0.10, 0.10, 0.10));
+
+	//models.push_back(new Model("gin.fbx", M11));
+
+	glm::mat4 M12 = M;
+	M12 = glm::scale(M12, glm::vec3(0.10, 0.10, 0.10));
+
+	//models.push_back(new Model("glass_bottle.fbx", M12));
+
+	glm::mat4 M13 = M;
+	M13 = glm::scale(M13, glm::vec3(0.5, 0.5, 0.5));
+
+	//models.push_back(new Model("lamp.fbx", M13));
+
+	glm::mat4 M14 = M;
+	M14 = glm::rotate(M14, PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+
+	//models.push_back(new Model("shelf.fbx", M14)); //zmienic kolory
+
+	glm::mat4 M15 = M;
+	M15 = glm::scale(M15, glm::vec3(0.01, 0.01, 0.01));
+	M15 = glm::rotate(M15, PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+
+	//models.push_back(new Model("shelf_2.fbx", M15));
+
+	glm::mat4 M16 = M;
+	M16 = glm::scale(M16, glm::vec3(0.05, 0.05, 0.05));
+	M16 = glm::rotate(M16, PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+
+	models.push_back(new Model("shelf_3.fbx", M16));
 
 
-	//wine.readTexture("./textures/barrel/barrel.png");
-	//wine.loadModel("./barrel.fbx");
+
+
+
+
+	//wine.readTexture("./textures/barrel_2/black.png");
+	//wine.loadModel("./barrel_2.fbx");
 }
 
 //Zwolnienie zasobów zajętych przez program
