@@ -142,6 +142,12 @@ void initOpenGLProgram(GLFWwindow* window) {
 
 	models.push_back(new Model("sphere.fbx", M8));
 
+	glm::mat4 M9 = M;
+	M9 = glm::translate(M9, glm::vec3(0.0f, -20.0f, 0.0f));
+	M9 = glm::scale(M9, glm::vec3(1000.0f, 0.1f, 1000.0f));
+
+	models.push_back(new Model("cube.fbx", M9));
+
 	std::vector<glm::mat4> M_wines = { M4, M4, M4, M4, M4, M4, M4};
 	int it = -12;
 
