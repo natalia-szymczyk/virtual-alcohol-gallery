@@ -107,19 +107,34 @@ void initOpenGLProgram(GLFWwindow* window) {
 	models.push_back(new Model("monstera.fbx", M10)); //git
 
 	glm::mat4 M3 = M;
-	M3 = glm::translate(M3, glm::vec3(0, -8, 0));
+	M3 = glm::translate(M3, glm::vec3(0, -8, 10));
 	M3 = glm::rotate(M3, PI/2, glm::vec3(1.0f, 0.0f, 0.0f));
 	M3 = glm::scale(M3, glm::vec3(6, 6, 6));
 
 	models.push_back(new Model("barrel.fbx", M3)); //git
 
+	glm::mat4 M9 = M;
+	M9 = glm::translate(M9, glm::vec3(14, -14, -25));
+	M9 = glm::rotate(M9, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+	M9 = glm::rotate(M9, PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
+	M9 = glm::scale(M9, glm::vec3(0.20, 0.20, 0.20));
+
+	models.push_back(new Model("distiller.fbx", M9)); //git
+
+	glm::mat4 M13 = M;
+	M13 = glm::translate(M13, glm::vec3(0, 10, 0));
+	M13 = glm::rotate(M13, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+	M13 = glm::scale(M13, glm::vec3(0.5, 0.5, 1.2));
+
+	models.push_back(new Model("lamp.fbx", M13)); //git
+
 	glm::mat4 M14 = M;
-	M14 = glm::translate(M14, glm::vec3(-22, -12, 0));
+	M14 = glm::translate(M14, glm::vec3(-24, -14, 0));
 	M14 = glm::rotate(M14, -PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
 	M14 = glm::rotate(M14, PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
-	M14 = glm::scale(M14, glm::vec3(5, 5, 5));
+	M14 = glm::scale(M14, glm::vec3(5, 5, 7));
 
-	models.push_back(new Model("shelf.fbx", M14)); //zmienic kolory
+	models.push_back(new Model("shelf.fbx", M14)); //git
 
 	glm::mat4 M4 = M;
 	//M4 = glm::rotate(M4, PI / 2, glm::vec3(0.0f, 1.0f, 0.0f));//error w lodepng 4643
@@ -133,7 +148,7 @@ void initOpenGLProgram(GLFWwindow* window) {
 
 	//models.push_back(new Model("bottle_beer.fbx", M5));
 
-	glm::mat4 M6 = M;
+	glm::mat4 M6 = M14;
 	M6 = glm::rotate(M6, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
 
 	//models.push_back(new Model("bottle_wine.fbx", M6));
@@ -149,13 +164,6 @@ void initOpenGLProgram(GLFWwindow* window) {
 
 	//models.push_back(new Model("bottles.fbx", M8));
 
-	glm::mat4 M9 = M;
-	M9 = glm::rotate(M9, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
-	M9 = glm::rotate(M9, PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
-	M9 = glm::scale(M9, glm::vec3(0.10, 0.10, 0.10));
-
-	//models.push_back(new Model("distiller.fbx", M9));
-
 	glm::mat4 M11 = M;
 	M11 = glm::rotate(M11, PI / 2, glm::vec3(0.0f, 1.0f, 0.0f));
 	M11 = glm::scale(M11, glm::vec3(0.10, 0.10, 0.10));
@@ -166,11 +174,6 @@ void initOpenGLProgram(GLFWwindow* window) {
 	M12 = glm::scale(M12, glm::vec3(0.10, 0.10, 0.10));
 
 	//models.push_back(new Model("glass_bottle.fbx", M12));
-
-	glm::mat4 M13 = M;
-	M13 = glm::scale(M13, glm::vec3(0.5, 0.5, 0.5));
-
-	//models.push_back(new Model("lamp.fbx", M13));
 
 	glm::mat4 M15 = M;
 	M15 = glm::scale(M15, glm::vec3(0.01, 0.01, 0.01));
