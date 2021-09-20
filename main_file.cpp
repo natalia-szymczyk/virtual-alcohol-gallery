@@ -34,7 +34,7 @@ float speed_x = 0; //[radiany/s]
 float speed_y = 0; //[radiany/s]
 float walk_speed = 0;
 
-glm::vec3 pos = glm::vec3(0, 0, 0);
+glm::vec3 pos = glm::vec3(0, 1, 0);
 
 int height = 720;
 int width = 1280;
@@ -86,81 +86,103 @@ void initOpenGLProgram(GLFWwindow* window) {
 	glm::mat4 M = glm::mat4(1.0f); //Zainicjuj macierz modelu macierzą jednostkową
 
 	glm::mat4 M1 = M;
-	M1 = glm::translate(M1, glm::vec3(0, 1, 0));
 	M1 = glm::scale(M1, glm::vec3(0.1, 0.1, 0.1));
 
 	models.push_back(new Model("floor.fbx", M1)); //git
 
-	glm::mat4 M2 = M;
-	M2 = glm::translate(M2, glm::vec3(-2, -14, 25));
-	M2 = glm::scale(M2, glm::vec3(0.1, 0.1, 0.1));
+	glm::mat4 M2 = M1;
+	M2 = glm::translate(M2, glm::vec3(-20, -150, 250));
 	M2 = glm::rotate(M2, PI, glm::vec3(0.0f, 1.0f, 0.0f));
 	M2 = glm::rotate(M2, -PI/2, glm::vec3(1.0f, 0.0f, 0.0f));
 
 	models.push_back(new Model("sofa.fbx", M2)); //git
 
-	glm::mat4 M3 = M;
-	M3 = glm::translate(M3, glm::vec3(0, -8, 10));
+	glm::mat4 M3 = M1;
+	M3 = glm::translate(M3, glm::vec3(0, -90, 100));
 	M3 = glm::rotate(M3, PI/2, glm::vec3(1.0f, 0.0f, 0.0f));
-	M3 = glm::scale(M3, glm::vec3(6, 6, 6));
+	M3 = glm::scale(M3, glm::vec3(60, 60, 60));
 
 	models.push_back(new Model("barrel.fbx", M3)); //git
 
-	glm::mat4 M4 = M;
-	M4 = glm::translate(M4, glm::vec3(-24, -14, 0));
+	glm::mat4 M4 = M1;
+	M4 = glm::translate(M4, glm::vec3(-240, -150, 0));
 	M4 = glm::rotate(M4, -PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
 	M4 = glm::rotate(M4, PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
-	M4 = glm::scale(M4, glm::vec3(5, 5, 7));
+	M4 = glm::scale(M4, glm::vec3(50, 50, 70));
 
 	models.push_back(new Model("shelf.fbx", M4)); //git
 
-	glm::mat4 M5 = M;
-	M5 = glm::translate(M5, glm::vec3(19, -11, 25));
+	glm::mat4 M5 = M1;
+	M5 = glm::translate(M5, glm::vec3(190, -120, 250));
 	M5 = glm::rotate(M5, -PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
-	M5 = glm::scale(M5, glm::vec3(0.8, 0.8, 0.8));
+	M5 = glm::scale(M5, glm::vec3(8, 8, 8));
 
 	models.push_back(new Model("monstera.fbx", M5)); //git
 
-	glm::mat4 M6 = M;
-	M6 = glm::translate(M6, glm::vec3(14, -14, -25));
+	glm::mat4 M6 = M1;
+	M6 = glm::translate(M6, glm::vec3(140, -150, -250));
 	M6 = glm::rotate(M6, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
 	M6 = glm::rotate(M6, PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
-	M6 = glm::scale(M6, glm::vec3(0.20, 0.20, 0.20));
+	M6 = glm::scale(M6, glm::vec3(2, 2, 2));
 
 	models.push_back(new Model("distiller.fbx", M6)); //git
 
-	glm::mat4 M7 = M;
-	M7 = glm::translate(M7, glm::vec3(0, 10, 0));
+	glm::mat4 M7 = M1;
+	M7 = glm::translate(M7, glm::vec3(0, 90, 0));
 	M7 = glm::rotate(M7, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
-	M7 = glm::scale(M7, glm::vec3(0.5, 0.5, 1.2));
+	M7 = glm::scale(M7, glm::vec3(5, 5, 12));
 
 	models.push_back(new Model("lamp.fbx", M7)); //git
 
-	glm::mat4 M8 = M4;
-	M8 = glm::scale(M8, glm::vec3(0.05, 0.05, 0.05));
-	M8 = glm::translate(M8, glm::vec3(10, 0, 19));
+	std::vector<glm::mat4> M_wines = { M4, M4, M4, M4, M4, M4, M4};
+	int it = -12;
 
-	models.push_back(new Model("bottle_wine.fbx", M8));
+	for (auto& m : M_wines) {
+		m = glm::scale(m, glm::vec3(0.065, 0.065, 0.065));
+		m = glm::translate(m, glm::vec3(it, 0, 26)); //12
 
-	glm::mat4 M9 = M4;
-	M9 = glm::scale(M9, glm::vec3(0.05, 0.05, 0.05));
-	M9 = glm::translate(M9, glm::vec3(5, 2, 19));
+		it += 4;
+		models.push_back(new Model("bottle_wine.fbx", m));
+	}
 
-	models.push_back(new Model("bottle_wine.fbx", M9));
+	std::vector<glm::mat4> M_beers = {M4, M4, M4, M4, M4, M4, M4};
+	int it_2 = -0.42;
 
-	glm::mat4 M10 = M4;
-	M10 = glm::scale(M10, glm::vec3(0.05, 0.05, 0.05));
-	M10 = glm::translate(M10, glm::vec3(-8, 1, 33));
+	for (auto& m : M_beers) {
+		m = glm::scale(m, glm::vec3(2, 2, 2));
+		m = glm::translate(m, glm::vec3(it_2, 0, 0.45)); //0.9 0.85
+		m = glm::rotate(m, PI , glm::vec3(0.0f, 0.0f, 1.0f));
 
-	models.push_back(new Model("bottle_wine.fbx", M10));
+		it_2 += 0.15;
+		models.push_back(new Model("bottle_beer.fbx", m));
+	}
 
-	glm::mat4 M11 = M4;
-	M11 = glm::scale(M11, glm::vec3(0.012, 0.012, 0.012));
-	M11 = glm::translate(M11, glm::vec3(8, 3, 33));
-	M11 = glm::rotate(M11, PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
-	M11 = glm::rotate(M11, PI / 2, glm::vec3(0.0f, 1.0f, 0.0f));
+	/*glm::mat4 M12 = M4;
+	M12 = glm::scale(M12, glm::vec3(2, 2, 2));
+	M12 = glm::translate(M12, glm::vec3(0.42, 0, 0.45)); //0.9 0.85
+	M12 = glm::rotate(M12, PI, glm::vec3(0.0f, 0.0f, 1.0f));
 
-	models.push_back(new Model("gin.fbx", M11));
+	models.push_back(new Model("bottle_beer.fbx", M12));
+
+	glm::mat4 M122 = M4;
+	M122 = glm::scale(M122, glm::vec3(2, 2, 2));
+	M122 = glm::translate(M122, glm::vec3(-0.42, 0, 0.45)); //0.9 0.85
+	M122 = glm::rotate(M122, PI, glm::vec3(0.0f, 0.0f, 1.0f));
+
+	models.push_back(new Model("bottle_beer.fbx", M122));*/
+
+	std::vector<glm::mat4> M_gins = {M4, M4, M4, M4, M4, M4, M4, M4};
+	it = -70;
+
+	for (auto& m : M_gins) {
+		m = glm::scale(m, glm::vec3(0.012, 0.012, 0.012));
+		m = glm::translate(m, glm::vec3(it, 3, 43)); //-70 i 70
+		m = glm::rotate(m, PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+		m = glm::rotate(m, PI / 2, glm::vec3(0.0f, 1.0f, 0.0f));
+
+		it += 20;
+		models.push_back(new Model("gin.fbx", m));
+	}
 
 	//glm::mat4 M12 = M;
 	//M12 = glm::scale(M12, glm::vec3(0.1, 100, 100));
