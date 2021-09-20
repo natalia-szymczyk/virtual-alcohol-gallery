@@ -134,6 +134,14 @@ void initOpenGLProgram(GLFWwindow* window) {
 
 	models.push_back(new Model("lamp.fbx", M7)); //git
 
+	glm::mat4 M8 = M;
+	M8 = glm::scale(M8, glm::vec3(200, 200, 200));
+	//M12 = glm::translate(M12, glm::vec3(30, 0, 0));
+	M8 = glm::rotate(M8, PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+	//M11 = glm::rotate(M11, PI / 2, glm::vec3(0.0f, 1.0f, 0.0f));
+
+	models.push_back(new Model("sphere.fbx", M8));
+
 	std::vector<glm::mat4> M_wines = { M4, M4, M4, M4, M4, M4, M4};
 	int it = -12;
 
