@@ -22,8 +22,8 @@ Place, Fifth Floor, Boston, MA  02110 - 1301  USA
 std::vector<Model*> models;
 
 std::vector<glm::vec3> lightPos = {
-	glm::vec3(-0.01f, 0.0f, 0.0f),
-	glm::vec3(0.0f, 0.0f, 0.0f),
+	glm::vec3(-10, -5, 15),
+	glm::vec3(-5, -5, -5),
 	glm::vec3(0.0f, 0.0f, -0.01f),
 	glm::vec3(0.0f, 0.0f, 0.0f)
 };
@@ -34,7 +34,7 @@ float speed_x = 0; //[radiany/s]
 float speed_y = 0; //[radiany/s]
 float walk_speed = 0;
 
-glm::vec3 pos = glm::vec3(0, 2, -11);
+glm::vec3 pos = glm::vec3(0, 0, 0);
 
 int height = 720;
 int width = 1280;
@@ -61,8 +61,8 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		if (key == GLFW_KEY_RIGHT) speed_y = -1;
 		if (key == GLFW_KEY_PAGE_UP) speed_x = -1;
 		if (key == GLFW_KEY_PAGE_DOWN) speed_x = 1;
-		if (key == GLFW_KEY_UP) walk_speed = 50;
-		if (key == GLFW_KEY_DOWN) walk_speed = -50;
+		if (key == GLFW_KEY_UP) walk_speed = 10;
+		if (key == GLFW_KEY_DOWN) walk_speed = -10;
 
 	}
 	if (action == GLFW_RELEASE) {
@@ -80,37 +80,46 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 void initOpenGLProgram(GLFWwindow* window) {
 	initShaders();
 	glfwSetKeyCallback(window, key_callback);
-	glClearColor(1, 1, 1, 1);
+	glClearColor(0, 0, 0, 1);
 	glEnable(GL_DEPTH_TEST);
 
 	glm::mat4 M = glm::mat4(1.0f); //Zainicjuj macierz modelu macierzą jednostkową
 
 	glm::mat4 M1 = M;
-	//glm::mat4 M1 = glm::rotate(M, PI, glm::vec3(1.0f, 0.0f, 0.0f));
-	//M1 = glm::rotate(M1, PI / 2, glm::vec3(0.0f, 1.0f, 0.0f));
-	//M1 = glm::rotate(M1, PI, glm::vec3(0.0f, 1.0f, 0.0f));
-	M1 = glm::scale(M1, glm::vec3(0.8, 0.8, 0.8));
+	M1 = glm::translate(M1, glm::vec3(0, 1, 0));
+	M1 = glm::scale(M1, glm::vec3(0.1, 0.1, 0.1));
 
-	for (int i = 0; i <= 3; i++) {
-		for (int j = 0; j <= 3; j++) {
-			cout << " " << M1[i][j] << " ";
-		}
-		cout << endl;
-	}
-
-	//models.push_back(new Model("floor.fbx", M1));
+	models.push_back(new Model("floor.fbx", M1)); //git
 
 	glm::mat4 M2 = M;
-	M2 = glm::scale(M2, glm::vec3(0.05, 0.05, 0.05));
+	M2 = glm::translate(M2, glm::vec3(-2, -14, 25));
+	M2 = glm::scale(M2, glm::vec3(0.1, 0.1, 0.1));
 	M2 = glm::rotate(M2, PI, glm::vec3(0.0f, 1.0f, 0.0f));
 	M2 = glm::rotate(M2, -PI/2, glm::vec3(1.0f, 0.0f, 0.0f));
 
-	//models.push_back(new Model("sofa.fbx", M2));
+	models.push_back(new Model("sofa.fbx", M2)); //git
+
+	glm::mat4 M10 = M;
+	M10 = glm::translate(M10, glm::vec3(19, -11, 25));
+	M10 = glm::rotate(M10, -PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+	M10 = glm::scale(M10, glm::vec3(0.8, 0.8, 0.8));
+
+	models.push_back(new Model("monstera.fbx", M10)); //git
 
 	glm::mat4 M3 = M;
+	M3 = glm::translate(M3, glm::vec3(0, -8, 0));
 	M3 = glm::rotate(M3, PI/2, glm::vec3(1.0f, 0.0f, 0.0f));
+	M3 = glm::scale(M3, glm::vec3(6, 6, 6));
 
-	//models.push_back(new Model("barrel.fbx", M3));
+	models.push_back(new Model("barrel.fbx", M3)); //git
+
+	glm::mat4 M14 = M;
+	M14 = glm::translate(M14, glm::vec3(-22, -2, 0));
+	M14 = glm::rotate(M14, PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+	M14 = glm::rotate(M14, PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
+	M14 = glm::scale(M14, glm::vec3(5, 5, 5));
+
+	models.push_back(new Model("shelf.fbx", M14)); //zmienic kolory
 
 	glm::mat4 M4 = M;
 	//M4 = glm::rotate(M4, PI / 2, glm::vec3(0.0f, 1.0f, 0.0f));//error w lodepng 4643
@@ -147,11 +156,6 @@ void initOpenGLProgram(GLFWwindow* window) {
 
 	//models.push_back(new Model("distiller.fbx", M9));
 
-	glm::mat4 M10 = M;
-	M10 = glm::scale(M10, glm::vec3(0.05, 0.05, 0.05));
-
-	//models.push_back(new Model("flower.fbx", M10)); //poprawic kolory
-
 	glm::mat4 M11 = M;
 	M11 = glm::rotate(M11, PI / 2, glm::vec3(0.0f, 1.0f, 0.0f));
 	M11 = glm::scale(M11, glm::vec3(0.10, 0.10, 0.10));
@@ -168,11 +172,6 @@ void initOpenGLProgram(GLFWwindow* window) {
 
 	//models.push_back(new Model("lamp.fbx", M13));
 
-	glm::mat4 M14 = M;
-	M14 = glm::rotate(M14, PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
-
-	//models.push_back(new Model("shelf.fbx", M14)); //zmienic kolory
-
 	glm::mat4 M15 = M;
 	M15 = glm::scale(M15, glm::vec3(0.01, 0.01, 0.01));
 	M15 = glm::rotate(M15, PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
@@ -183,9 +182,17 @@ void initOpenGLProgram(GLFWwindow* window) {
 	M16 = glm::scale(M16, glm::vec3(0.05, 0.05, 0.05));
 	M16 = glm::rotate(M16, PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
 
-	models.push_back(new Model("shelf_3.fbx", M16));
+	//models.push_back(new Model("shelf_3.fbx", M16));
 
 
+
+	glm::mat4 M17 = M;
+	M17 = glm::translate(M17, glm::vec3(0, -100, 0));
+	M17 = glm::translate(M17, glm::vec3(-200, 0, 300));
+	M17 = glm::scale(M17, glm::vec3(0.5, 0.5, 0.5));
+	M17 = glm::rotate(M17, -PI/2, glm::vec3(1.0f, 0.0f, 0.0f));
+
+	//models.push_back(new Model("test.fbx", M17));
 
 
 
@@ -212,7 +219,7 @@ void drawScene(GLFWwindow* window, float kat_x, float kat_y) {
 	glm::vec4 lightPosition4 = glm::vec4(lightPos[3], 1.f);
 
 	glm::mat4 V = glm::lookAt(pos, pos + calcDir(kat_x, kat_y), glm::vec3(0.0f, 1.0f, 0.0f)); //Wylicz macierz widoku
-	glm::mat4 P = glm::perspective(glm::radians(50.0f), 1.0f, 0.1f, 500.0f); //Wylicz macierz rzutowania
+	glm::mat4 P = glm::perspective(glm::radians(50.0f), 1.0f, 0.1f, 5000.0f); //Wylicz macierz rzutowania
 
 	spLambertTextured->use();
 
