@@ -114,8 +114,8 @@ void initOpenGLProgram(GLFWwindow* window) {
 	models.push_back(new Model("barrel.fbx", M3)); //git
 
 	glm::mat4 M14 = M;
-	M14 = glm::translate(M14, glm::vec3(-22, -2, 0));
-	M14 = glm::rotate(M14, PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+	M14 = glm::translate(M14, glm::vec3(-22, -12, 0));
+	M14 = glm::rotate(M14, -PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
 	M14 = glm::rotate(M14, PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
 	M14 = glm::scale(M14, glm::vec3(5, 5, 5));
 
