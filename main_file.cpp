@@ -130,7 +130,7 @@ void initOpenGLProgram(GLFWwindow* window) {
 
 	glm::mat4 M8 = M;
 	M8 = glm::scale(M8, glm::vec3(200, 200, 200));
-	M8 = glm::rotate(M8, PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
+	M8 = glm::rotate(M8, - PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
 
 	models.push_back(new Model("sphere.fbx", M8));
 
@@ -177,8 +177,6 @@ void initOpenGLProgram(GLFWwindow* window) {
 		models.push_back(new Model("gin.fbx", m));
 	}
 
-
-
 	glm::mat4 M10 = M1;
 	M10 = glm::rotate(M10, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
 	M10 = glm::rotate(M10, PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
@@ -195,14 +193,55 @@ void initOpenGLProgram(GLFWwindow* window) {
 
 	models.push_back(new Model("painting_2.fbx", M11));
 
+	glm::mat4 M12 = M1;
+	M12 = glm::translate(M12, glm::vec3(240, -150, 0));
+	M12 = glm::rotate(M12, -PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+	M12 = glm::rotate(M12, -PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
+	M12 = glm::scale(M12, glm::vec3(50, 50, 70));
+
+	models.push_back(new Model("shelf.fbx", M12)); //git
+
+	std::vector<glm::mat4> M_wines_1 = { M12, M12, M12, M12, M12, M12, M12, M12, M12 };
+	it = -12;
+
+	for (auto& m : M_wines_1) {
+		m = glm::scale(m, glm::vec3(0.065, 0.065, 0.065));
+		m = glm::translate(m, glm::vec3(it, 0, 26)); //12
+		m = glm::rotate(m, PI, glm::vec3(0.0f, 0.0f, 1.0f));
+
+		it += 3;
+		models.push_back(new Model("bottle_wine_1.fbx", m));
+	}
+
+	std::vector<glm::mat4> M_wines_2 = { M12, M12, M12, M12, M12, M12, M12, M12, M12 };
+	it = -12;
+
+	for (auto& m : M_wines_2) {
+		m = glm::scale(m, glm::vec3(0.065, 0.065, 0.065));
+		m = glm::translate(m, glm::vec3(it, 0, 15)); //12
+		m = glm::rotate(m, PI, glm::vec3(0.0f, 0.0f, 1.0f));
+
+		it += 3;
+		models.push_back(new Model("bottle_wine_2.fbx", m));
+	}
+
+	std::vector<glm::mat4> M_wines_3 = { M12, M12, M12, M12, M12, M12, M12, M12, M12 };
+	it = -12;
+
+	for (auto& m : M_wines_3) {
+		m = glm::scale(m, glm::vec3(0.065, 0.065, 0.065));
+		m = glm::translate(m, glm::vec3(it, 0, 4.5)); //12
+		m = glm::rotate(m, PI, glm::vec3(0.0f, 0.0f, 1.0f));
+
+		it += 3;
+		models.push_back(new Model("bottle_wine_3.fbx", m));
+	}
 
 	//glm::mat4 M10 = M1;
 	////M10 = glm::rotate(M10, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
 	////M10 = glm::scale(M10, glm::vec3(0.10, 0.10, 0.10));
 
 	//models.push_back(new Model("glass_bottle.fbx", M10));
-
-
 
 
 	//wine.readTexture("./textures/barrel_2/black.png");
@@ -281,6 +320,8 @@ int main(void) {
 		pos += (float)(walk_speed * glfwGetTime()) * calcDir(kat_x, kat_y);
 		glfwSetTime(0); //Wyzeruj licznik czasu
 		drawScene(window, kat_x, kat_y); //Wykonaj procedurę rysującą
+		//auto &matrix = models[7];
+		models[7]->M = glm::rotate(models[7]->M, -PI/3000, glm::vec3(1.0f, 0.0f, 0.0f));
 		glfwPollEvents(); //Wykonaj procedury callback w zalezności od zdarzeń jakie zaszły.
 	}
 

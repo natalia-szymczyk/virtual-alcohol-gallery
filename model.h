@@ -93,12 +93,6 @@ private:
 	std::vector<GLuint> norm;
 	std::vector<GLuint> height;
 
-	//to do
-	//parallel mapping
-	//height
-	glm::mat4 M;
-	//btRigidBody* body;
-
 public:
 	static std::unordered_map<std::string, GLuint> tex_global;
 	static std::unordered_map<std::string, std::vector<std::vector<glm::vec4>>> mesh_vec_global;
@@ -108,6 +102,11 @@ public:
 	//static std::unordered_map<std::string, std::vector<std::vector<glm::vec4>>> mesh_tangent_global;
 	//static std::unordered_map<std::string, std::vector<std::vector<glm::vec4>>> mesh_bitangent_global;
 
+	//to do
+	//parallel mapping
+	//height
+	glm::mat4 M;
+	//btRigidBody* body;
 
 
 
@@ -117,6 +116,8 @@ public:
 	void draw(glm::f32* V, glm::f32* P);
 	GLuint readTexture(const char* filename);
 	void loadTextures(std::string filename, int maxIndex, std::string ini_file, std::vector<GLuint>* vec);
+
+
 
 	//void generateRigitBodies(btDiscreteDynamicsWorld* dynamicsWorld);
 };
