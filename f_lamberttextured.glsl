@@ -7,7 +7,7 @@ uniform vec3 lightPos1 = vec3(100, 100, 100);
 uniform vec3 lightPos2 = vec3(100, 100, -100);
 uniform vec3 lightPos3 = vec3(-100, 100, 100);
 uniform vec3 lightPos4 = vec3(-100, 100, -100);
-uniform vec3 lightPos5 = vec3(10, 5, -6);
+//uniform vec3 lightPos5 = vec3(0, -100, 0);
 
 in vec2 TexCoord;
 in vec3 icNorm;
@@ -34,8 +34,8 @@ void main()
     vec3 lightDir4 = normalize(vec3(10, 0, 10));
     vec4 diffuse4 = vec4( max(dot(norm, lightDir4), 0) * lightColor, 1 );
 
-    vec3 lightDir5 = normalize(lightPos5 - icFragPos);
-    vec4 diffuse5 = vec4( max(dot(norm, lightDir5), 0) * lightColor, 1 );
+    //vec3 lightDir5 = normalize(lightPos5 - icFragPos);
+    //vec4 diffuse5 = vec4( max(dot(norm, lightDir5), 0) * lightColor, 1); + diffuse5
 
-	pxColor = texture(tex, TexCoord) * ( ambient + ((diffuse1 + diffuse2 + diffuse3 + diffuse4 + diffuse5) * 0.8) );
+	pxColor = texture(tex, TexCoord) * ( ambient + ((diffuse1 + diffuse2 + diffuse3 + diffuse4) * 0.8) );
 }

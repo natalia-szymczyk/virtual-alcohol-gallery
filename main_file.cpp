@@ -21,12 +21,6 @@ Place, Fifth Floor, Boston, MA  02110 - 1301  USA
 #include "wine.h"
 std::vector<Model*> models;
 
-std::vector<glm::vec3> lightPos = {
-	glm::vec3(-10, -5, 15),
-	glm::vec3(-5, -5, -5),
-	glm::vec3(0.0f, 0.0f, -0.01f),
-	glm::vec3(0.0f, 0.0f, 0.0f)
-};
 
 Wine wine;
 
@@ -98,7 +92,7 @@ void initOpenGLProgram(GLFWwindow* window) {
 	models.push_back(new Model("sofa.fbx", M2)); //git
 
 	glm::mat4 M3 = M1;
-	M3 = glm::translate(M3, glm::vec3(0, -90, 100));
+	M3 = glm::translate(M3, glm::vec3(-170, -90, 100));
 	M3 = glm::rotate(M3, PI/2, glm::vec3(1.0f, 0.0f, 0.0f));
 	M3 = glm::scale(M3, glm::vec3(60, 60, 60));
 
@@ -136,9 +130,7 @@ void initOpenGLProgram(GLFWwindow* window) {
 
 	glm::mat4 M8 = M;
 	M8 = glm::scale(M8, glm::vec3(200, 200, 200));
-	//M12 = glm::translate(M12, glm::vec3(30, 0, 0));
-	M8 = glm::rotate(M8, PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
-	//M11 = glm::rotate(M11, PI / 2, glm::vec3(0.0f, 1.0f, 0.0f));
+	M8 = glm::rotate(M8, PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
 
 	models.push_back(new Model("sphere.fbx", M8));
 
@@ -154,36 +146,23 @@ void initOpenGLProgram(GLFWwindow* window) {
 	for (auto& m : M_wines) {
 		m = glm::scale(m, glm::vec3(0.065, 0.065, 0.065));
 		m = glm::translate(m, glm::vec3(it, 0, 26)); //12
+		m = glm::rotate(m, PI, glm::vec3(0.0f, 0.0f, 1.0f));
 
 		it += 4;
 		models.push_back(new Model("bottle_wine.fbx", m));
 	}
 
-	std::vector<glm::mat4> M_beers = {M4, M4, M4, M4, M4, M4, M4};
-	int it_2 = -0.42;
+	std::vector<glm::mat4> M_beers = {M4, M4, M4, M4, M4, M4, M4, M4, M4};
+	float it_f = -0.42;
 
 	for (auto& m : M_beers) {
 		m = glm::scale(m, glm::vec3(2, 2, 2));
-		m = glm::translate(m, glm::vec3(it_2, 0, 0.45)); //0.9 0.85
+		m = glm::translate(m, glm::vec3(it_f, 0, 0.45));
 		m = glm::rotate(m, PI , glm::vec3(0.0f, 0.0f, 1.0f));
 
-		it_2 += 0.15;
+		it_f += 0.10;
 		models.push_back(new Model("bottle_beer.fbx", m));
 	}
-
-	/*glm::mat4 M12 = M4;
-	M12 = glm::scale(M12, glm::vec3(2, 2, 2));
-	M12 = glm::translate(M12, glm::vec3(0.42, 0, 0.45)); //0.9 0.85
-	M12 = glm::rotate(M12, PI, glm::vec3(0.0f, 0.0f, 1.0f));
-
-	models.push_back(new Model("bottle_beer.fbx", M12));
-
-	glm::mat4 M122 = M4;
-	M122 = glm::scale(M122, glm::vec3(2, 2, 2));
-	M122 = glm::translate(M122, glm::vec3(-0.42, 0, 0.45)); //0.9 0.85
-	M122 = glm::rotate(M122, PI, glm::vec3(0.0f, 0.0f, 1.0f));
-
-	models.push_back(new Model("bottle_beer.fbx", M122));*/
 
 	std::vector<glm::mat4> M_gins = {M4, M4, M4, M4, M4, M4, M4, M4};
 	it = -70;
@@ -198,71 +177,30 @@ void initOpenGLProgram(GLFWwindow* window) {
 		models.push_back(new Model("gin.fbx", m));
 	}
 
-	//glm::mat4 M12 = M;
-	//M12 = glm::scale(M12, glm::vec3(0.1, 100, 100));
-	//M12 = glm::translate(M12, glm::vec3(30, 0, 0));
-	//M11 = glm::rotate(M11, PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
-	//M11 = glm::rotate(M11, PI / 2, glm::vec3(0.0f, 1.0f, 0.0f));
-
-	//models.push_back(new Model("cube.fbx", M12));
 
 
+	glm::mat4 M10 = M1;
+	M10 = glm::rotate(M10, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+	M10 = glm::rotate(M10, PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
+	M10 = glm::translate(M10, glm::vec3(-330, 22, 50));
+	M10 = glm::scale(M10, glm::vec3(2, 2, 2));
 
-	//glm::mat4 M4 = M;
-	//M4 = glm::rotate(M4, PI / 2, glm::vec3(0.0f, 1.0f, 0.0f));//error w lodepng 4643
-	//M4 = glm::scale(M4, glm::vec3(0.01, 0.01, 0.01));
+	models.push_back(new Model("painting.fbx", M10));
 
-	//models.push_back(new Model("barrel_2.fbx", M4));
+	glm::mat4 M11 = M1;
+	M11 = glm::rotate(M11, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+	M11 = glm::rotate(M11, 3 * PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
+	M11 = glm::translate(M11, glm::vec3(-330, -170, 50));
+	M11 = glm::scale(M11, glm::vec3(2, 1, 2));
 
-	//glm::mat4 M5 = M;
-	//M5 = glm::rotate(M5, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
-	//M5 = glm::scale(M5, glm::vec3(10, 10, 10));
-
-	//models.push_back(new Model("bottle_beer.fbx", M5));
-
-	//glm::mat4 M7 = M;
-	//M7 = glm::rotate(M7, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
-	//M7 = glm::scale(M7, glm::vec3(0.010, 0.010, 0.010));
-
-	//models.push_back(new Model("bottle_wine_2.fbx", M7));
-
-	//glm::mat4 M8 = M;
-	//M8 = glm::scale(M8, glm::vec3(0.010, 0.010, 0.010));
-
-	//models.push_back(new Model("bottles.fbx", M8));
-
-	//glm::mat4 M11 = M;
-	//M11 = glm::rotate(M11, PI / 2, glm::vec3(0.0f, 1.0f, 0.0f));
-	//M11 = glm::scale(M11, glm::vec3(0.10, 0.10, 0.10));
-
-	//models.push_back(new Model("gin.fbx", M11));
-
-	//glm::mat4 M12 = M;
-	//M12 = glm::scale(M12, glm::vec3(0.10, 0.10, 0.10));
-
-	//models.push_back(new Model("glass_bottle.fbx", M12));
-
-	//glm::mat4 M15 = M;
-	//M15 = glm::scale(M15, glm::vec3(0.01, 0.01, 0.01));
-	//M15 = glm::rotate(M15, PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
-
-	//models.push_back(new Model("shelf_2.fbx", M15));
-
-	//glm::mat4 M16 = M;
-	//M16 = glm::scale(M16, glm::vec3(0.05, 0.05, 0.05));
-	//M16 = glm::rotate(M16, PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
-
-	//models.push_back(new Model("shelf_3.fbx", M16));
+	models.push_back(new Model("painting_2.fbx", M11));
 
 
+	//glm::mat4 M10 = M1;
+	////M10 = glm::rotate(M10, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+	////M10 = glm::scale(M10, glm::vec3(0.10, 0.10, 0.10));
 
-	//glm::mat4 Mtest = M;
-	//Mtest = glm::translate(Mtest, glm::vec3(0, -100, 0));
-	//Mtest = glm::translate(Mtest, glm::vec3(-200, 0, 300));
-	//Mtest = glm::scale(Mtest, glm::vec3(0.5, 0.5, 0.5));
-	//Mtest = glm::rotate(Mtest, -PI/2, glm::vec3(1.0f, 0.0f, 0.0f));
-
-	//models.push_back(new Model("test.fbx", Mtest));
+	//models.push_back(new Model("glass_bottle.fbx", M10));
 
 
 
@@ -281,13 +219,6 @@ void freeOpenGLProgram(GLFWwindow* window) {
 void drawScene(GLFWwindow* window, float kat_x, float kat_y) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	//printf("%f %f %f\n", pos.x, pos.y, pos.z);
-	
-	glm::vec4 lightPosition1 = glm::vec4(lightPos[0], 1.f);
-	glm::vec4 lightPosition2 = glm::vec4(lightPos[1], 1.f);
-	glm::vec4 lightPosition3 = glm::vec4(lightPos[2], 1.f);
-	glm::vec4 lightPosition4 = glm::vec4(lightPos[3], 1.f);
-
 	glm::mat4 V = glm::lookAt(pos, pos + calcDir(kat_x, kat_y), glm::vec3(0.0f, 1.0f, 0.0f)); //Wylicz macierz widoku
 	glm::mat4 P = glm::perspective(glm::radians(50.0f), 1.0f, 0.1f, 5000.0f); //Wylicz macierz rzutowania
 
@@ -295,11 +226,6 @@ void drawScene(GLFWwindow* window, float kat_x, float kat_y) {
 
 	glUniformMatrix4fv(spLambertTextured->u("P"), 1, false, glm::value_ptr(P));
 	glUniformMatrix4fv(spLambertTextured->u("V"), 1, false, glm::value_ptr(V));
-
-	glUniform4fv(spLambertTextured->u("lpos1"), 1, glm::value_ptr(lightPosition1));
-	glUniform4fv(spLambertTextured->u("lpos2"), 1, glm::value_ptr(lightPosition2));
-	glUniform4fv(spLambertTextured->u("lpos3"), 1, glm::value_ptr(lightPosition3));
-	glUniform4fv(spLambertTextured->u("lpos4"), 1, glm::value_ptr(lightPosition4));
 
 	glm::mat4 M = glm::mat4(1.0f);
 
