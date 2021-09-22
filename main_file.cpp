@@ -18,11 +18,8 @@ Place, Fifth Floor, Boston, MA  02110 - 1301  USA
 #define GLM_FORCE_RADIANS
 
 #include "headers.h"
-#include "wine.h"
 std::vector<Model*> models;
 
-
-Wine wine;
 
 float speed_x = 0; //[radiany/s]
 float speed_y = 0; //[radiany/s]
@@ -100,9 +97,9 @@ void initOpenGLProgram(GLFWwindow* window) {
 	models.push_back(new Model("sofa.fbx", M2)); //git
 
 	glm::mat4 M3 = M1;
-	M3 = glm::translate(M3, glm::vec3(-220, -90, 230));
+	M3 = glm::translate(M3, glm::vec3(-220, -50, 230));
 	M3 = glm::rotate(M3, PI/2, glm::vec3(1.0f, 0.0f, 0.0f));
-	M3 = glm::scale(M3, glm::vec3(60, 60, 60));
+	M3 = glm::scale(M3, glm::vec3(60, 60, 100));
 
 	models.push_back(new Model("barrel.fbx", M3)); //git
 
@@ -111,7 +108,7 @@ void initOpenGLProgram(GLFWwindow* window) {
 	M4 = glm::rotate(M4, -PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
 	M4 = glm::rotate(M4, PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
 	M4 = glm::scale(M4, glm::vec3(50, 50, 70));
-
+	
 	models.push_back(new Model("shelf.fbx", M4)); //git
 
 	glm::mat4 M5 = M1;
@@ -261,7 +258,6 @@ void initOpenGLProgram(GLFWwindow* window) {
 //Zwolnienie zasobów zajętych przez program
 void freeOpenGLProgram(GLFWwindow* window) {
 	freeShaders();
-	glDeleteTextures(1, &wine.texture);
 }
 
 //Procedura rysująca zawartość sceny
