@@ -89,12 +89,12 @@ void initOpenGLProgram(GLFWwindow* window) {
 
 	models.push_back(new Model("floor.fbx", M1)); //git
 
-	glm::mat4 M2 = M1;
-	M2 = glm::translate(M2, glm::vec3(-20, -150, 250));
-	M2 = glm::rotate(M2, PI, glm::vec3(0.0f, 1.0f, 0.0f));
-	M2 = glm::rotate(M2, -PI/2, glm::vec3(1.0f, 0.0f, 0.0f));
+	//glm::mat4 M2 = M1;
+	//M2 = glm::translate(M2, glm::vec3(-20, -150, 250));
+	//M2 = glm::rotate(M2, PI, glm::vec3(0.0f, 1.0f, 0.0f));
+	//M2 = glm::rotate(M2, -PI/2, glm::vec3(1.0f, 0.0f, 0.0f));
 
-	models.push_back(new Model("sofa.fbx", M2)); //git
+	//models.push_back(new Model("sofa.fbx", M2)); //git
 
 	glm::mat4 M3 = M1;
 	M3 = glm::translate(M3, glm::vec3(-220, -50, 230));
@@ -103,47 +103,62 @@ void initOpenGLProgram(GLFWwindow* window) {
 
 	models.push_back(new Model("barrel.fbx", M3)); //git
 
-	glm::mat4 M4 = M1;
-	M4 = glm::translate(M4, glm::vec3(-240, -150, 0));
-	M4 = glm::rotate(M4, -PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
-	M4 = glm::rotate(M4, PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
-	M4 = glm::scale(M4, glm::vec3(50, 50, 70));
-	
-	models.push_back(new Model("shelf.fbx", M4)); //git
+	glm::mat4 M13 = M3;
+	M13 = glm::scale(M13, glm::vec3(2, 2, 1.7));
+	M13 = glm::translate(M13, glm::vec3(0, 0, 0.02));
+	M13 = glm::rotate(M13, PI, glm::vec3(1.0f, 0.0f, 0.0f));
 
-	glm::mat4 M5 = M1;
-	M5 = glm::translate(M5, glm::vec3(190, -120, 250));
-	M5 = glm::rotate(M5, -PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
-	M5 = glm::scale(M5, glm::vec3(8, 8, 8));
+	models.push_back(new Model("bottle_beer.fbx", M13));
 
-	models.push_back(new Model("monstera.fbx", M5)); //git
+	glm::mat4 M10 = M3;
+	M10 = glm::scale(M10, glm::vec3(0.065, 0.065, 0.065));
+	M10 = glm::translate(M10, glm::vec3(-2, 5, 0)); //12
+	M10 = glm::rotate(M10, PI, glm::vec3(0.0f, 0.0f, 1.0f));
+	M10 = glm::rotate(M10, -PI, glm::vec3(1.0f, 0.0f, 0.0f));
 
-	glm::mat4 M6 = M1;
-	M6 = glm::translate(M6, glm::vec3(160, -150, -290));
-	M6 = glm::rotate(M6, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
-	M6 = glm::rotate(M6, PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
-	M6 = glm::scale(M6, glm::vec3(2, 2, 2));
+	models.push_back(new Model("bottle_wine.fbx", M10));
 
-	models.push_back(new Model("distiller.fbx", M6)); //git
+	//glm::mat4 M4 = M1;
+	//M4 = glm::translate(M4, glm::vec3(-240, -150, 0));
+	//M4 = glm::rotate(M4, -PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+	//M4 = glm::rotate(M4, PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
+	//M4 = glm::scale(M4, glm::vec3(50, 50, 70));
+	//
+	//models.push_back(new Model("shelf.fbx", M4)); //git
 
-	glm::mat4 M7 = M1;
-	M7 = glm::translate(M7, glm::vec3(0, 90, 0));
-	M7 = glm::rotate(M7, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
-	M7 = glm::scale(M7, glm::vec3(5, 5, 12));
+	//glm::mat4 M5 = M1;
+	//M5 = glm::translate(M5, glm::vec3(190, -120, 250));
+	//M5 = glm::rotate(M5, -PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+	//M5 = glm::scale(M5, glm::vec3(8, 8, 8));
 
-	models.push_back(new Model("lamp.fbx", M7)); //git
+	//models.push_back(new Model("monstera.fbx", M5)); //git
 
-	glm::mat4 M8 = M;
-	M8 = glm::scale(M8, glm::vec3(200, 200, 200));
-	M8 = glm::rotate(M8, - PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
+	//glm::mat4 M6 = M1;
+	//M6 = glm::translate(M6, glm::vec3(160, -150, -290));
+	//M6 = glm::rotate(M6, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+	//M6 = glm::rotate(M6, PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
+	//M6 = glm::scale(M6, glm::vec3(2, 2, 2));
 
-	models.push_back(new Model("sphere.fbx", M8));
+	//models.push_back(new Model("distiller.fbx", M6)); //git
 
-	glm::mat4 M9 = M;
-	M9 = glm::translate(M9, glm::vec3(0.0f, -20.0f, 0.0f));
-	M9 = glm::scale(M9, glm::vec3(1000.0f, 0.1f, 1000.0f));
+	//glm::mat4 M7 = M1;
+	//M7 = glm::translate(M7, glm::vec3(0, 90, 0));
+	//M7 = glm::rotate(M7, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+	//M7 = glm::scale(M7, glm::vec3(5, 5, 12));
 
-	models.push_back(new Model("cube.fbx", M9));
+	//models.push_back(new Model("lamp.fbx", M7)); //git
+
+	//glm::mat4 M8 = M;
+	//M8 = glm::scale(M8, glm::vec3(200, 200, 200));
+	//M8 = glm::rotate(M8, - PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
+
+	//models.push_back(new Model("sphere.fbx", M8));
+
+	//glm::mat4 M9 = M;
+	//M9 = glm::translate(M9, glm::vec3(0.0f, -20.0f, 0.0f));
+	//M9 = glm::scale(M9, glm::vec3(1000.0f, 0.1f, 1000.0f));
+
+	//models.push_back(new Model("cube.fbx", M9));
 
 	//glm::mat4 M10 = M1;
 	//M10 = glm::rotate(M10, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
@@ -161,19 +176,14 @@ void initOpenGLProgram(GLFWwindow* window) {
 
 	//models.push_back(new Model("painting_2.fbx", M11));
 
-	glm::mat4 M12 = M1;
-	M12 = glm::translate(M12, glm::vec3(240, -150, 0));
-	M12 = glm::rotate(M12, -PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
-	M12 = glm::rotate(M12, -PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
-	M12 = glm::scale(M12, glm::vec3(50, 50, 70));
+	//glm::mat4 M12 = M1;
+	//M12 = glm::translate(M12, glm::vec3(240, -150, 0));
+	//M12 = glm::rotate(M12, -PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+	//M12 = glm::rotate(M12, -PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
+	//M12 = glm::scale(M12, glm::vec3(50, 50, 70));
 
-	models.push_back(new Model("shelf.fbx", M12)); //git
+	//models.push_back(new Model("shelf.fbx", M12)); //git
 
-	////glm::mat4 M13 = M1;
-	////M13 = glm::translate(M13, glm::vec3(-0.4f, 9.58f, 0.95f));
-	////M13 = glm::rotate(M13, -90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
-
-	////models.push_back(new Model("bottle_beer.fbx", M13));
 
 	//std::vector<glm::mat4> M_beers = { M4, M4, M4, M4, M4, M4, M4, M4, M4 };
 	//float it_f = -0.42;
@@ -247,12 +257,6 @@ void initOpenGLProgram(GLFWwindow* window) {
 	//	it += 3;
 	//	models.push_back(new Model("bottle_wine_3.fbx", m));
 	//}
-
-	//glm::mat4 M10 = M1;
-	////M10 = glm::rotate(M10, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
-	////M10 = glm::scale(M10, glm::vec3(0.10, 0.10, 0.10));
-
-	//models.push_back(new Model("glass_bottle.fbx", M10));
 }
 
 //Zwolnienie zasobów zajętych przez program
@@ -265,7 +269,7 @@ void drawScene(GLFWwindow* window, float kat_x, float kat_y) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glm::mat4 V = glm::lookAt(pos, pos + calcDir(kat_x, kat_y), glm::vec3(0.0f, 1.0f, 0.0f)); //Wylicz macierz widoku
-	glm::mat4 P = glm::perspective(glm::radians(50.0f), aspect, 0.05f, 5000.0f); //Wylicz macierz rzutowania
+	glm::mat4 P = glm::perspective(glm::radians(50.0f), aspect, 0.05f, 500.0f); //Wylicz macierz rzutowania
 
 	spLambertTextured->use();
 
