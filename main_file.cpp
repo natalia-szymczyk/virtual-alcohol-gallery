@@ -32,6 +32,7 @@ glm::vec3 pos = glm::vec3(0, 1, 0);
 
 int height = 720;
 int width = 1280;
+int tmp = 1;
 
 float aspect = width / height;
 
@@ -52,6 +53,8 @@ void error_callback(int error, const char* description) {
 
 //Procedura obsługi klawiatury
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod) {
+
+
 	if (action == GLFW_PRESS) {
 		if (key == GLFW_KEY_LEFT) speed_y = 1;
 		if (key == GLFW_KEY_RIGHT) speed_y = -1;
@@ -59,6 +62,10 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		if (key == GLFW_KEY_PAGE_DOWN) speed_x = 1;
 		if (key == GLFW_KEY_UP) walk_speed = 10;
 		if (key == GLFW_KEY_DOWN) walk_speed = -10;
+		if (key == GLFW_KEY_W) {
+			cout << endl << tmp << ": " << pos.x << " " << pos.y << " " << pos.z << endl;
+			tmp++;
+		}
 
 	}
 	if (action == GLFW_RELEASE) {
@@ -70,7 +77,6 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		if (key == GLFW_KEY_DOWN) walk_speed = 0;
 	}
 }
-
 
 //Procedura inicjująca
 void initOpenGLProgram(GLFWwindow* window) {
@@ -93,54 +99,54 @@ void initOpenGLProgram(GLFWwindow* window) {
 
 	models.push_back(new Model("sofa.fbx", M2)); //git
 
-	//glm::mat4 M3 = M1;
-	//M3 = glm::translate(M3, glm::vec3(-170, -90, 100));
-	//M3 = glm::rotate(M3, PI/2, glm::vec3(1.0f, 0.0f, 0.0f));
-	//M3 = glm::scale(M3, glm::vec3(60, 60, 60));
+	glm::mat4 M3 = M1;
+	M3 = glm::translate(M3, glm::vec3(-220, -90, 230));
+	M3 = glm::rotate(M3, PI/2, glm::vec3(1.0f, 0.0f, 0.0f));
+	M3 = glm::scale(M3, glm::vec3(60, 60, 60));
 
-	//models.push_back(new Model("barrel.fbx", M3)); //git
+	models.push_back(new Model("barrel.fbx", M3)); //git
 
-	//glm::mat4 M4 = M1;
-	//M4 = glm::translate(M4, glm::vec3(-240, -150, 0));
-	//M4 = glm::rotate(M4, -PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
-	//M4 = glm::rotate(M4, PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
-	//M4 = glm::scale(M4, glm::vec3(50, 50, 70));
+	glm::mat4 M4 = M1;
+	M4 = glm::translate(M4, glm::vec3(-240, -150, 0));
+	M4 = glm::rotate(M4, -PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+	M4 = glm::rotate(M4, PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
+	M4 = glm::scale(M4, glm::vec3(50, 50, 70));
 
-	//models.push_back(new Model("shelf.fbx", M4)); //git
+	models.push_back(new Model("shelf.fbx", M4)); //git
 
-	//glm::mat4 M5 = M1;
-	//M5 = glm::translate(M5, glm::vec3(190, -120, 250));
-	//M5 = glm::rotate(M5, -PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
-	//M5 = glm::scale(M5, glm::vec3(8, 8, 8));
+	glm::mat4 M5 = M1;
+	M5 = glm::translate(M5, glm::vec3(190, -120, 250));
+	M5 = glm::rotate(M5, -PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+	M5 = glm::scale(M5, glm::vec3(8, 8, 8));
 
-	//models.push_back(new Model("monstera.fbx", M5)); //git
+	models.push_back(new Model("monstera.fbx", M5)); //git
 
-	//glm::mat4 M6 = M1;
-	//M6 = glm::translate(M6, glm::vec3(140, -150, -250));
-	//M6 = glm::rotate(M6, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
-	//M6 = glm::rotate(M6, PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
-	//M6 = glm::scale(M6, glm::vec3(2, 2, 2));
+	glm::mat4 M6 = M1;
+	M6 = glm::translate(M6, glm::vec3(160, -150, -290));
+	M6 = glm::rotate(M6, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+	M6 = glm::rotate(M6, PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
+	M6 = glm::scale(M6, glm::vec3(2, 2, 2));
 
-	//models.push_back(new Model("distiller.fbx", M6)); //git
+	models.push_back(new Model("distiller.fbx", M6)); //git
 
-	//glm::mat4 M7 = M1;
-	//M7 = glm::translate(M7, glm::vec3(0, 90, 0));
-	//M7 = glm::rotate(M7, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
-	//M7 = glm::scale(M7, glm::vec3(5, 5, 12));
+	glm::mat4 M7 = M1;
+	M7 = glm::translate(M7, glm::vec3(0, 90, 0));
+	M7 = glm::rotate(M7, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+	M7 = glm::scale(M7, glm::vec3(5, 5, 12));
 
-	//models.push_back(new Model("lamp.fbx", M7)); //git
+	models.push_back(new Model("lamp.fbx", M7)); //git
 
-	//glm::mat4 M8 = M;
-	//M8 = glm::scale(M8, glm::vec3(200, 200, 200));
-	//M8 = glm::rotate(M8, - PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
+	glm::mat4 M8 = M;
+	M8 = glm::scale(M8, glm::vec3(200, 200, 200));
+	M8 = glm::rotate(M8, - PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
 
-	//models.push_back(new Model("sphere.fbx", M8));
+	models.push_back(new Model("sphere.fbx", M8));
 
-	//glm::mat4 M9 = M;
-	//M9 = glm::translate(M9, glm::vec3(0.0f, -20.0f, 0.0f));
-	//M9 = glm::scale(M9, glm::vec3(1000.0f, 0.1f, 1000.0f));
+	glm::mat4 M9 = M;
+	M9 = glm::translate(M9, glm::vec3(0.0f, -20.0f, 0.0f));
+	M9 = glm::scale(M9, glm::vec3(1000.0f, 0.1f, 1000.0f));
 
-	//models.push_back(new Model("cube.fbx", M9));
+	models.push_back(new Model("cube.fbx", M9));
 
 	//glm::mat4 M10 = M1;
 	//M10 = glm::rotate(M10, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
@@ -158,19 +164,19 @@ void initOpenGLProgram(GLFWwindow* window) {
 
 	//models.push_back(new Model("painting_2.fbx", M11));
 
-	//glm::mat4 M12 = M1;
-	//M12 = glm::translate(M12, glm::vec3(240, -150, 0));
-	//M12 = glm::rotate(M12, -PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
-	//M12 = glm::rotate(M12, -PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
-	//M12 = glm::scale(M12, glm::vec3(50, 50, 70));
+	glm::mat4 M12 = M1;
+	M12 = glm::translate(M12, glm::vec3(240, -150, 0));
+	M12 = glm::rotate(M12, -PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+	M12 = glm::rotate(M12, -PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
+	M12 = glm::scale(M12, glm::vec3(50, 50, 70));
 
-	//models.push_back(new Model("shelf.fbx", M12)); //git
+	models.push_back(new Model("shelf.fbx", M12)); //git
 
-	glm::mat4 M13 = M1;
-	M13 = glm::translate(M13, glm::vec3(-0.4f, 9.58f, 0.95f));
-	M13 = glm::rotate(M13, -90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
+	////glm::mat4 M13 = M1;
+	////M13 = glm::translate(M13, glm::vec3(-0.4f, 9.58f, 0.95f));
+	////M13 = glm::rotate(M13, -90 * PI / 180, glm::vec3(1.0f, 0.0f, 0.0f));
 
-	models.push_back(new Model("bottle_beer.fbx", M13));
+	////models.push_back(new Model("bottle_beer.fbx", M13));
 
 	//std::vector<glm::mat4> M_beers = { M4, M4, M4, M4, M4, M4, M4, M4, M4 };
 	//float it_f = -0.42;
@@ -277,6 +283,27 @@ void drawScene(GLFWwindow* window, float kat_x, float kat_y) {
 	glfwSwapBuffers(window);
 }
 
+int tryToWalk(glm::vec3 step) {
+	//return 1;
+
+	if (pos.x + step.x <= 18 && pos.x + step.x >= -21 && pos.z + step.z <= 16.7 && pos.z + step.z >= -22) {
+		return 1;
+	}
+	else if (pos.x + step.x <= 5.5 && pos.x + step.x >= -25 && pos.z + step.z <= -6 && pos.z + step.z >= -29) {
+		return 1;
+	}
+	else if (pos.x + step.x <= 23.5 && pos.x + step.x >= 18 && pos.z + step.z <= 16.7 && pos.z + step.z >= 5.8) {
+		return 1;
+	}
+	else if (pos.x + step.x <= 23.5 && pos.x + step.x >= 18 && pos.z + step.z <= -6.7 && pos.z + step.z >= -22) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+
+}
+
 int main(void) {
 	GLFWwindow* window;
 
@@ -308,12 +335,15 @@ int main(void) {
 	float angle = 0; //zadeklaruj zmienną przechowującą aktualny kąt obrotu
 	float kat_x = 0;
 	float kat_y = 0;
+	glm::vec3 tmp_step;
 	glfwSetTime(0); //Wyzeruj licznik czasu
 	while (!glfwWindowShouldClose(window)) //Tak długo jak okno nie powinno zostać zamknięte
 	{
 		kat_x += speed_x * glfwGetTime();
 		kat_y += speed_y * glfwGetTime();
-		pos += (float)(walk_speed * glfwGetTime()) * calcDir(kat_x, kat_y);
+		tmp_step = (float)(walk_speed * glfwGetTime()) * calcDir(kat_x, kat_y);
+		if(tryToWalk(tmp_step))	pos += tmp_step;
+
 		glfwSetTime(0); //Wyzeruj licznik czasu
 		drawScene(window, kat_x, kat_y); //Wykonaj procedurę rysującą
 		//auto &matrix = models[7];
