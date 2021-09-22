@@ -18,8 +18,13 @@ Place, Fifth Floor, Boston, MA  02110 - 1301  USA
 #define GLM_FORCE_RADIANS
 
 #include "headers.h"
+
 std::vector<Model*> models;
 
+int counter = 0;
+int canDrink = 0;
+int currentDrink = 6;
+//int rotatedDrink = 0;
 
 float speed_x = 0; //[radiany/s]
 float speed_y = 0; //[radiany/s]
@@ -43,6 +48,10 @@ glm::vec3 calcDir(float kat_x, float kat_y) {
 	return glm::vec3(dir);
 }
 
+//void rotateDrink(float a) {
+//	models[currentDrink]->M = glm::rotate(models[currentDrink]->M, a * pos.x / pos.z, glm::vec3(0, 0, 1));
+//}
+
 //Procedura obsługi błędów
 void error_callback(int error, const char* description) {
 	fputs(description, stderr);
@@ -61,17 +70,33 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		if (key == GLFW_KEY_DOWN) walk_speed = -10;
 		if (key == GLFW_KEY_W) {
 			cout << endl << tmp << ": " << pos.x << " " << pos.y << " " << pos.z << endl;
+			cout << endl << "sin: " << pos.x / pos.z << endl;
 			tmp++;
+		}
+		if (key == GLFW_KEY_D && pos.x <= -12 && pos.z >= 14) {
+			//if (!rotatedDrink) {
+			//	rotateDrink(-0.6);
+			//	rotatedDrink = 1;
+			//}
+			counter = counter + 1;
+			canDrink = 1;
 		}
 
 	}
 	if (action == GLFW_RELEASE) {
-		if (key == GLFW_KEY_LEFT) speed_y = 0;
-		if (key == GLFW_KEY_RIGHT) speed_y = 0;
-		if (key == GLFW_KEY_PAGE_UP) speed_x = 0;
-		if (key == GLFW_KEY_PAGE_DOWN) speed_x = 0;
-		if (key == GLFW_KEY_UP) walk_speed = 0;
-		if (key == GLFW_KEY_DOWN) walk_speed = 0;
+		if (key == GLFW_KEY_LEFT)		speed_y = 0;
+		if (key == GLFW_KEY_RIGHT)		speed_y = 0;
+		if (key == GLFW_KEY_PAGE_UP)	speed_x = 0;
+		if (key == GLFW_KEY_PAGE_DOWN)	speed_x = 0;
+		if (key == GLFW_KEY_UP)			walk_speed = 0;
+		if (key == GLFW_KEY_DOWN)		walk_speed = 0;
+		if (key == GLFW_KEY_D && pos.x <= -12 && pos.z >= 14) {
+			canDrink = 2;
+			//if (rotatedDrink) {
+			//	rotateDrink(0.3);
+			//	rotatedDrink = 0;
+			//}
+		}
 	}
 }
 
@@ -89,34 +114,57 @@ void initOpenGLProgram(GLFWwindow* window) {
 
 	models.push_back(new Model("floor.fbx", M1)); //git
 
+	glm::mat4 M8 = M;
+	M8 = glm::scale(M8, glm::vec3(200, 200, 200));
+	M8 = glm::translate(M8, glm::vec3(0, -0.15f, 0));
+	//M8 = glm::rotate(M8, PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
+
+	models.push_back(new Model("sphere.fbx", M8));
+
+	glm::mat4 M9 = M;
+	M9 = glm::translate(M9, glm::vec3(0.0f, -20.0f, 0.0f));
+	M9 = glm::scale(M9, glm::vec3(500.0f, 0.1f, 500.0f));
+
+	models.push_back(new Model("cube.fbx", M9));
+
 	//glm::mat4 M2 = M1;
 	//M2 = glm::translate(M2, glm::vec3(-20, -150, 250));
 	//M2 = glm::rotate(M2, PI, glm::vec3(0.0f, 1.0f, 0.0f));
-	//M2 = glm::rotate(M2, -PI/2, glm::vec3(1.0f, 0.0f, 0.0f));
+	//M2 = glm::rotate(M2, -PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
 
 	//models.push_back(new Model("sofa.fbx", M2)); //git
 
 	glm::mat4 M3 = M1;
 	M3 = glm::translate(M3, glm::vec3(-220, -50, 230));
-	M3 = glm::rotate(M3, PI/2, glm::vec3(1.0f, 0.0f, 0.0f));
+	M3 = glm::rotate(M3, PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
 	M3 = glm::scale(M3, glm::vec3(60, 60, 100));
 
 	models.push_back(new Model("barrel.fbx", M3)); //git
 
 	glm::mat4 M13 = M3;
 	M13 = glm::scale(M13, glm::vec3(2, 2, 1.7));
-	M13 = glm::translate(M13, glm::vec3(0, 0, 0.02));
+	M13 = glm::translate(M13, glm::vec3(-0.05, -0.05, 0.02));
 	M13 = glm::rotate(M13, PI, glm::vec3(1.0f, 0.0f, 0.0f));
+	M13 = glm::rotate(M13, -PI / 4, glm::vec3(0.0f, 0.0f, 1.0f));
 
 	models.push_back(new Model("bottle_beer.fbx", M13));
 
 	glm::mat4 M10 = M3;
 	M10 = glm::scale(M10, glm::vec3(0.065, 0.065, 0.065));
-	M10 = glm::translate(M10, glm::vec3(-2, 5, 0)); //12
-	M10 = glm::rotate(M10, PI, glm::vec3(0.0f, 0.0f, 1.0f));
+	M10 = glm::translate(M10, glm::vec3(-0.5, 2, -0.4)); //12
+	M10 = glm::rotate(M10, PI / 4, glm::vec3(0.0f, 0.0f, 1.0f));
 	M10 = glm::rotate(M10, -PI, glm::vec3(1.0f, 0.0f, 0.0f));
+	M10 = glm::rotate(M10, -55 * PI / 180, glm::vec3(0.0f, 0.0f, 1.0f));
 
 	models.push_back(new Model("bottle_wine.fbx", M10));
+
+	glm::mat4 M11 = M3;
+	M11 = glm::scale(M11, glm::vec3(0.02, 0.02, 0.02));
+	M11 = glm::translate(M11, glm::vec3(8, -8, 0.1)); //12
+	M11 = glm::rotate(M11, PI / 4, glm::vec3(0.0f, 0.0f, 1.0f));
+	M11 = glm::rotate(M11, -PI, glm::vec3(1.0f, 0.0f, 0.0f));
+
+	models.push_back(new Model("glass.FBX", M11));
 
 	//glm::mat4 M4 = M1;
 	//M4 = glm::translate(M4, glm::vec3(-240, -150, 0));
@@ -147,18 +195,6 @@ void initOpenGLProgram(GLFWwindow* window) {
 	//M7 = glm::scale(M7, glm::vec3(5, 5, 12));
 
 	//models.push_back(new Model("lamp.fbx", M7)); //git
-
-	//glm::mat4 M8 = M;
-	//M8 = glm::scale(M8, glm::vec3(200, 200, 200));
-	//M8 = glm::rotate(M8, - PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
-
-	//models.push_back(new Model("sphere.fbx", M8));
-
-	//glm::mat4 M9 = M;
-	//M9 = glm::translate(M9, glm::vec3(0.0f, -20.0f, 0.0f));
-	//M9 = glm::scale(M9, glm::vec3(1000.0f, 0.1f, 1000.0f));
-
-	//models.push_back(new Model("cube.fbx", M9));
 
 	//glm::mat4 M10 = M1;
 	//M10 = glm::rotate(M10, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
@@ -265,11 +301,11 @@ void freeOpenGLProgram(GLFWwindow* window) {
 }
 
 //Procedura rysująca zawartość sceny
-void drawScene(GLFWwindow* window, float kat_x, float kat_y) {
+void drawScene(GLFWwindow* window, float distortion, float kat_x, float kat_y) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glm::mat4 V = glm::lookAt(pos, pos + calcDir(kat_x, kat_y), glm::vec3(0.0f, 1.0f, 0.0f)); //Wylicz macierz widoku
-	glm::mat4 P = glm::perspective(glm::radians(50.0f), aspect, 0.05f, 500.0f); //Wylicz macierz rzutowania
+	glm::mat4 P = glm::perspective(glm::radians(60.0f + sin(distortion / 20)), aspect, 0.1f, 500.0f); //Wylicz macierz rzutowania
 
 	spLambertTextured->use();
 
@@ -332,6 +368,9 @@ int main(void) {
 
 	initOpenGLProgram(window);
 
+	float it = 0.1f, step = 1.0f, end = 20.0f;
+	float distortion = 0.1f;
+
 	float angle = 0; //zadeklaruj zmienną przechowującą aktualny kąt obrotu
 	float kat_x = 0;
 	float kat_y = 0;
@@ -339,16 +378,43 @@ int main(void) {
 	glfwSetTime(0); //Wyzeruj licznik czasu
 	while (!glfwWindowShouldClose(window)) //Tak długo jak okno nie powinno zostać zamknięte
 	{
+		distortion = distortion + counter;
 		kat_x += speed_x * glfwGetTime();
 		kat_y += speed_y * glfwGetTime();
 		tmp_step = (float)(walk_speed * glfwGetTime()) * calcDir(kat_x, kat_y);
-		if(tryToWalk(tmp_step))	pos += tmp_step;
+		if (tryToWalk(tmp_step))	pos += tmp_step;
 
 		glfwSetTime(0); //Wyzeruj licznik czasu
-		drawScene(window, kat_x, kat_y); //Wykonaj procedurę rysującą
+		drawScene(window, distortion, kat_x, kat_y); //Wykonaj procedurę rysującą
 		//auto &matrix = models[7];
-		//models[7]->M = glm::rotate(models[7]->M, -PI/3000, glm::vec3(1.0f, 0.0f, 0.0f));
+		models[1]->M = glm::rotate(models[1]->M, -PI / 6000, glm::vec3(0.0f, 1.0f, 0.0f));
 		//models[2]->M = glm::translate(models[2]->M, glm::vec3(pos.x, pos.y, pos.z) + glm::vec3(-0.4f, 9.58f, 0.95f));
+		if (canDrink == 1) {
+			if (it < end) {
+				models[currentDrink]->M = glm::translate(models[currentDrink]->M, glm::vec3(0, 0, step));
+				models[currentDrink]->M = glm::rotate(models[currentDrink]->M, -step / 20, glm::vec3(1, 0, 0));
+
+				it = it + step;
+			}
+			else {
+				canDrink = 0;
+			}
+		}
+		else if (canDrink == 2) {
+			if (it > 0.1f) {
+				models[currentDrink]->M = glm::translate(models[currentDrink]->M, glm::vec3(0, 0, -step));
+				models[currentDrink]->M = glm::rotate(models[currentDrink]->M, step / 20, glm::vec3(1, 0, 0));
+
+				it = it - step;
+			}
+			else {
+				//if (rotatedDrink) {
+				//	rotateDrink(0.6);
+				//	rotatedDrink = 0;
+				//}
+				canDrink = 0;
+			}
+		}
 		glfwPollEvents(); //Wykonaj procedury callback w zalezności od zdarzeń jakie zaszły.
 	}
 
