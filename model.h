@@ -15,25 +15,9 @@
 //jeśli nie - napisz do Free Software Foundation, Inc., 59 Temple
 //Place, Fifth Floor, Boston, MA  02110 - 1301  USA
 
-
 #pragma once
 
-#include <vector>
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-#include <glm/glm.hpp>
-#include <iostream>
-#include <shaderprogram.h>
-#include <glm/gtc/type_ptr.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/matrix_decompose.hpp>
-#include <GL/glew.h>
-#include <utility>
-#include <algorithm>
-#include "lodepng.h"
-#include <fstream>
-#include <unordered_map>
+#include "headers.h"
 
 class Model {
 private:

@@ -15,6 +15,7 @@
 //jeśli nie - napisz do Free Software Foundation, Inc., 59 Temple
 //Place, Fifth Floor, Boston, MA  02110 - 1301  USA
 
+
 #include <Model.h>
 
 std::unordered_map<std::string, GLuint> Model::tex_global;
@@ -90,11 +91,11 @@ Model::Model(std::string filename, glm::mat4 ModelMatrix) {
 
 		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 
-		for (int i = 0; i < 19; i++) {
-			if (material->GetTextureCount(aiTextureType(i))) {
-				std::cout << i << " ::: " << material->GetTextureCount(aiTextureType(i)) << std::endl;
-			}
-		}
+		//for (int i = 0; i < 19; i++) {
+		//	if (material->GetTextureCount(aiTextureType(i))) {
+		//		std::cout << i << " ::: " << material->GetTextureCount(aiTextureType(i)) << std::endl;
+		//	}
+		//}
 
 		aiString mat_str;
 
@@ -185,9 +186,9 @@ void Model::loadTextures(std::string filename, int maxIndex, std::string ini_fil
 	filename1 += "\\";
 	filename1 += ini_file;
 
-	std::ifstream wej(filename1);
+	std::ifstream input(filename1);
 
-	if (!wej.is_open()) {
+	if (!input.is_open()) {
 		for (int i = 0; i < maxIndex; i++) {
 			vec->push_back(-1);
 		}
@@ -195,22 +196,22 @@ void Model::loadTextures(std::string filename, int maxIndex, std::string ini_fil
 		return;
 	}
 
-	std::string str1, str2, xd;
+	std::string str1, str2, var;
 	int index;
 
-	while (!wej.eof()) {
-		std::getline(wej, xd);
+	while (!input.eof()) {
+		std::getline(input, var);
 
-		xd = xd.substr(0, xd.find("#"));
+		var = var.substr(0, var.find("#"));
 
-		int pos = xd.find("=");
+		int pos = var.find("=");
 
 		if (pos == std::string::npos) {
 			continue;
 		}
 
-		str1 = xd.substr(0, pos);
-		str2 = xd.substr(pos + 1, std::string::npos);
+		str1 = var.substr(0, pos);
+		str2 = var.substr(pos + 1, std::string::npos);
 
 		while (str2[0] == ' ') {
 			str2 = str2.substr(1, std::string::npos);
@@ -225,7 +226,7 @@ void Model::loadTextures(std::string filename, int maxIndex, std::string ini_fil
 
 	}
 
-	wej.close();
+	input.close();
 
 	std::sort(file_names.begin(), file_names.end());
 

@@ -74,11 +74,11 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 			counter = counter + 1;
 			canDrink = 1;
 		}
-		if (key == GLFW_KEY_W) {
-			cout << endl << tmp << ": " << pos.x << " " << pos.y << " " << pos.z << endl;
-			cout << endl << "sin: " << pos.x / pos.z << endl;
-			tmp++;
-		}
+		//if (key == GLFW_KEY_W) {
+		//	cout << endl << tmp << ": " << pos.x << " " << pos.y << " " << pos.z << endl;
+		//	cout << endl << "sin: " << pos.x / pos.z << endl;
+		//	tmp++;
+		//}
 	}
 	if (action == GLFW_RELEASE) {
 		if (key == GLFW_KEY_LEFT)			speed_y = 0;
