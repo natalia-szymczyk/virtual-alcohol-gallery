@@ -23,7 +23,7 @@ std::vector<Model*> models;
 
 int counter = 0;
 int canDrink = 0;
-int currentDrink = 5; //5-kieliszek 6 - piwo
+int currentDrink = 5; //5 - kieliszek 6 - piwo
 //int rotatedDrink = 0;
 
 float speed_x = 0; //[radiany/s]
@@ -196,21 +196,21 @@ void initOpenGLProgram(GLFWwindow* window) {
 
 	//models.push_back(new Model("lamp.fbx", M7)); //git
 
-	//glm::mat4 M10 = M1;
-	//M10 = glm::rotate(M10, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
-	//M10 = glm::rotate(M10, PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
-	//M10 = glm::translate(M10, glm::vec3(-330, 22, 50));
-	//M10 = glm::scale(M10, glm::vec3(2, 2, 2));
+	//glm::mat4 M100 = M1;
+	//M100 = glm::rotate(M100, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+	//M100 = glm::rotate(M100, PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
+	//M100 = glm::translate(M100, glm::vec3(-330, 22, 50));
+	//M100 = glm::scale(M100, glm::vec3(2, 2, 2));
 
-	//models.push_back(new Model("painting.fbx", M10));
+	//models.push_back(new Model("painting.fbx", M100));
 
-	//glm::mat4 M11 = M1;
-	//M11 = glm::rotate(M11, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
-	//M11 = glm::rotate(M11, 3 * PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
-	//M11 = glm::translate(M11, glm::vec3(-330, -170, 50));
-	//M11 = glm::scale(M11, glm::vec3(2, 1, 2));
+	//glm::mat4 M111 = M1;
+	//M111 = glm::rotate(M111, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+	//M111 = glm::rotate(M111, 3 * PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
+	//M111 = glm::translate(M111, glm::vec3(-330, -170, 50));
+	//M111 = glm::scale(M111, glm::vec3(2, 1, 2));
 
-	//models.push_back(new Model("painting_2.fbx", M11));
+	//models.push_back(new Model("painting_2.fbx", M111));
 
 	//glm::mat4 M12 = M1;
 	//M12 = glm::translate(M12, glm::vec3(240, -150, 0));
@@ -307,9 +307,6 @@ void drawScene(GLFWwindow* window, float distortion, float kat_x, float kat_y) {
 	glm::mat4 V = glm::lookAt(pos, pos + calcDir(kat_x, kat_y), glm::vec3(0.0f, 1.0f, 0.0f)); //Wylicz macierz widoku
 	glm::mat4 P = glm::perspective(glm::radians(60.0f), aspect, 0.1f, 500.0f); //Wylicz macierz rzutowania
 
-// + cos(distortion / 20)
-
-
 	spLambertTextured->use();
 
 	glUniformMatrix4fv(spLambertTextured->u("P"), 1, false, glm::value_ptr(P));
@@ -390,17 +387,17 @@ int main(void) {
 		tmp_step = (float)(walk_speed * glfwGetTime()) * calcDir(kat_x, kat_y);
 		if (tryToWalk(tmp_step))	pos += tmp_step;
 
-		//pos.x += sin(distortion / 500) * counter / 10;
+		if(canDrink == 0) pos.x += sin(distortion / 500) * counter / 10;
 
 		glfwSetTime(0); //Wyzeruj licznik czasu
 		drawScene(window, distortion, kat_x, kat_y); //Wykonaj procedurę rysującą
 
-		//pos.x -= sin(distortion / 500) * counter / 10;
+		if (canDrink == 0) pos.x -= sin(distortion / 500) * counter / 10;
 
 		//auto &matrix = models[7];
 		models[1]->M = glm::rotate(models[1]->M, -PI / 6000, glm::vec3(0.0f, 1.0f, 0.0f));
 		//models[2]->M = glm::translate(models[2]->M, glm::vec3(pos.x, pos.y, pos.z) + glm::vec3(-0.4f, 9.58f, 0.95f));
-		if (canDrink == 1) {
+		if (currentDrink == 5 && canDrink == 1) {
 			if (it < end) {
 				models[currentDrink]->M = glm::rotate(models[currentDrink]->M, -step / 20, glm::vec3(1, 0, 0));
 				models[currentDrink]->M = glm::translate(models[currentDrink]->M, glm::vec3(0, 0, step));
@@ -411,7 +408,7 @@ int main(void) {
 				canDrink = 0;
 			}
 		}
-		else if (canDrink == 2) {
+		else if (currentDrink == 5 && canDrink == 2) {
 			if (it > 0.1f) {
 				models[currentDrink]->M = glm::translate(models[currentDrink]->M, glm::vec3(0, 0, -step));
 				models[currentDrink]->M = glm::rotate(models[currentDrink]->M, step / 20, glm::vec3(1, 0, 0));
