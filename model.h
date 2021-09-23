@@ -1,4 +1,3 @@
-///*
 //Niniejszy program jest wolnym oprogramowaniem; możesz go
 //rozprowadzać dalej i / lub modyfikować na warunkach Powszechnej
 //Licencji Publicznej GNU, wydanej przez Fundację Wolnego
@@ -15,37 +14,10 @@
 //Powszechnej Licencji Publicznej GNU(GNU General Public License);
 //jeśli nie - napisz do Free Software Foundation, Inc., 59 Temple
 //Place, Fifth Floor, Boston, MA  02110 - 1301  USA
-//*/
-//
-//#ifndef MODEL_H
-//#define MODEL_H
-//
-//
-//#include <GL/glew.h>
-//#include <vector>
-//#include <glm/glm.hpp>
-//#include <GLFW/glfw3.h>
-//#include "constants.h"
-//
-//namespace Models {
-//
-//	class Model {
-//		public:
-//			int vertexCount;
-//			float *vertices;
-//			float *normals;
-//			float *vertexNormals;
-//			float *texCoords;
-//			float *colors;
-//
-//			virtual void drawSolid(bool smooth)=0;
-//			virtual void drawWire(bool smooth=false);
-//	};
-//}
-//
-//#endif
+
 
 #pragma once
+
 #include <vector>
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -60,23 +32,8 @@
 #include <utility>
 #include <algorithm>
 #include "lodepng.h"
-
 #include <fstream>
 #include <unordered_map>
-
-//#include "btBulletDynamicsCommon.h"
-//#include "btBulletCollisionCommon.h"
-
-//extern ShaderProgram* sp_color;
-//extern ShaderProgram* sp_textured;
-//extern ShaderProgram* sp_normals;
-//extern ShaderProgram* sp_normals_file;
-//extern ShaderProgram* sp_spec_file;
-//extern ShaderProgram* sp_spec;
-//extern ShaderProgram* sp_tex_norm_height;
-
-//extern glm::vec4 light_source1;
-//extern glm::vec4 light_source2;
 
 class Model {
 private:
@@ -85,8 +42,6 @@ private:
 	std::vector<std::vector<glm::vec4>>* mesh_norm;
 	std::vector<std::vector<glm::vec2>>* mesh_tex;
 	std::vector<std::vector<unsigned int>>* mesh_indices;
-	//std::vector<std::vector<glm::vec4>>* mesh_tangent;
-	//std::vector<std::vector<glm::vec4>>* mesh_bitangent;
 
 	std::vector<GLuint> tex;
 	std::vector<GLuint> specular;
@@ -94,30 +49,15 @@ private:
 	std::vector<GLuint> height;
 
 public:
+	glm::mat4 M;
 	static std::unordered_map<std::string, GLuint> tex_global;
 	static std::unordered_map<std::string, std::vector<std::vector<glm::vec4>>> mesh_vec_global;
 	static std::unordered_map<std::string, std::vector<std::vector<glm::vec4>>> mesh_norm_global;
 	static std::unordered_map<std::string, std::vector<std::vector<glm::vec2>>> mesh_tex_global;
 	static std::unordered_map<std::string, std::vector<std::vector<unsigned int>>> mesh_indices_global;
-	//static std::unordered_map<std::string, std::vector<std::vector<glm::vec4>>> mesh_tangent_global;
-	//static std::unordered_map<std::string, std::vector<std::vector<glm::vec4>>> mesh_bitangent_global;
-
-	//to do
-	//parallel mapping
-	//height
-	glm::mat4 M;
-	//btRigidBody* body;
-
-
-
 
 	Model(std::string filename, glm::mat4 ModelMatrix);
-
-	void draw(glm::f32* V, glm::f32* P);
 	GLuint readTexture(const char* filename);
+	void draw(glm::f32* V, glm::f32* P);
 	void loadTextures(std::string filename, int maxIndex, std::string ini_file, std::vector<GLuint>* vec);
-
-
-
-	//void generateRigitBodies(btDiscreteDynamicsWorld* dynamicsWorld);
 };
