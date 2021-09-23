@@ -23,7 +23,7 @@ std::vector<Model*> models;
 
 int counter = 0;
 int canDrink = 0;
-int currentDrink = 6;
+int currentDrink = 5; //5-kieliszek 6 - piwo
 //int rotatedDrink = 0;
 
 float speed_x = 0; //[radiany/s]
@@ -127,27 +127,12 @@ void initOpenGLProgram(GLFWwindow* window) {
 
 	models.push_back(new Model("cube.fbx", M9));
 
-	//glm::mat4 M2 = M1;
-	//M2 = glm::translate(M2, glm::vec3(-20, -150, 250));
-	//M2 = glm::rotate(M2, PI, glm::vec3(0.0f, 1.0f, 0.0f));
-	//M2 = glm::rotate(M2, -PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
-
-	//models.push_back(new Model("sofa.fbx", M2)); //git
-
 	glm::mat4 M3 = M1;
 	M3 = glm::translate(M3, glm::vec3(-220, -50, 230));
 	M3 = glm::rotate(M3, PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
 	M3 = glm::scale(M3, glm::vec3(60, 60, 100));
 
 	models.push_back(new Model("barrel.fbx", M3)); //git
-
-	glm::mat4 M13 = M3;
-	M13 = glm::scale(M13, glm::vec3(2, 2, 1.7));
-	M13 = glm::translate(M13, glm::vec3(-0.05, -0.05, 0.02));
-	M13 = glm::rotate(M13, PI, glm::vec3(1.0f, 0.0f, 0.0f));
-	M13 = glm::rotate(M13, -PI / 4, glm::vec3(0.0f, 0.0f, 1.0f));
-
-	models.push_back(new Model("bottle_beer.fbx", M13));
 
 	glm::mat4 M10 = M3;
 	M10 = glm::scale(M10, glm::vec3(0.065, 0.065, 0.065));
@@ -160,11 +145,26 @@ void initOpenGLProgram(GLFWwindow* window) {
 
 	glm::mat4 M11 = M3;
 	M11 = glm::scale(M11, glm::vec3(0.02, 0.02, 0.02));
-	M11 = glm::translate(M11, glm::vec3(8, -8, 0.1)); //12
+	M11 = glm::translate(M11, glm::vec3(8, -8, 0.1)); 
 	M11 = glm::rotate(M11, PI / 4, glm::vec3(0.0f, 0.0f, 1.0f));
 	M11 = glm::rotate(M11, -PI, glm::vec3(1.0f, 0.0f, 0.0f));
 
 	models.push_back(new Model("glass.FBX", M11));
+
+	glm::mat4 M13 = M3;
+	M13 = glm::scale(M13, glm::vec3(2, 2, 1.7));
+	M13 = glm::translate(M13, glm::vec3(-0.05, -0.05, 0.02));
+	M13 = glm::rotate(M13, PI, glm::vec3(1.0f, 0.0f, 0.0f));
+	M13 = glm::rotate(M13, -PI / 4, glm::vec3(0.0f, 0.0f, 1.0f));
+
+	models.push_back(new Model("bottle_beer.fbx", M13));
+
+	//glm::mat4 M2 = M1;
+	//M2 = glm::translate(M2, glm::vec3(-20, -150, 250));
+	//M2 = glm::rotate(M2, PI, glm::vec3(0.0f, 1.0f, 0.0f));
+	//M2 = glm::rotate(M2, -PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
+
+	//models.push_back(new Model("sofa.fbx", M2)); //git
 
 	//glm::mat4 M4 = M1;
 	//M4 = glm::translate(M4, glm::vec3(-240, -150, 0));
@@ -305,7 +305,10 @@ void drawScene(GLFWwindow* window, float distortion, float kat_x, float kat_y) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glm::mat4 V = glm::lookAt(pos, pos + calcDir(kat_x, kat_y), glm::vec3(0.0f, 1.0f, 0.0f)); //Wylicz macierz widoku
-	glm::mat4 P = glm::perspective(glm::radians(60.0f + sin(distortion / 20)), aspect, 0.1f, 500.0f); //Wylicz macierz rzutowania
+	glm::mat4 P = glm::perspective(glm::radians(60.0f), aspect, 0.1f, 500.0f); //Wylicz macierz rzutowania
+
+// + cos(distortion / 20)
+
 
 	spLambertTextured->use();
 
@@ -379,20 +382,28 @@ int main(void) {
 	while (!glfwWindowShouldClose(window)) //Tak długo jak okno nie powinno zostać zamknięte
 	{
 		distortion = distortion + counter;
+
+		cout << "counter : " << counter << " sin : " << sin(distortion / 1000) << endl;
+
 		kat_x += speed_x * glfwGetTime();
 		kat_y += speed_y * glfwGetTime();
 		tmp_step = (float)(walk_speed * glfwGetTime()) * calcDir(kat_x, kat_y);
 		if (tryToWalk(tmp_step))	pos += tmp_step;
 
+		//pos.x += sin(distortion / 500) * counter / 10;
+
 		glfwSetTime(0); //Wyzeruj licznik czasu
 		drawScene(window, distortion, kat_x, kat_y); //Wykonaj procedurę rysującą
+
+		//pos.x -= sin(distortion / 500) * counter / 10;
+
 		//auto &matrix = models[7];
 		models[1]->M = glm::rotate(models[1]->M, -PI / 6000, glm::vec3(0.0f, 1.0f, 0.0f));
 		//models[2]->M = glm::translate(models[2]->M, glm::vec3(pos.x, pos.y, pos.z) + glm::vec3(-0.4f, 9.58f, 0.95f));
 		if (canDrink == 1) {
 			if (it < end) {
-				models[currentDrink]->M = glm::translate(models[currentDrink]->M, glm::vec3(0, 0, step));
 				models[currentDrink]->M = glm::rotate(models[currentDrink]->M, -step / 20, glm::vec3(1, 0, 0));
+				models[currentDrink]->M = glm::translate(models[currentDrink]->M, glm::vec3(0, 0, step));
 
 				it = it + step;
 			}
