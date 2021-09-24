@@ -303,10 +303,10 @@ void drawScene(GLFWwindow* window, float distortion, float kat_x, float kat_y) {
 	glm::mat4 V = glm::lookAt(pos, pos + calcDir(kat_x, kat_y), glm::vec3(0.0f, 1.0f, 0.0f));	// Wylicz macierz widoku
 	glm::mat4 P = glm::perspective(glm::radians(60.0f), aspect, 0.1f, 500.0f);					// Wylicz macierz rzutowania
 
-	spLambertTextured->use();
+	sp->use();
 
-	glUniformMatrix4fv(spLambertTextured->u("P"), 1, false, glm::value_ptr(P));
-	glUniformMatrix4fv(spLambertTextured->u("V"), 1, false, glm::value_ptr(V));
+	glUniformMatrix4fv(sp->u("P"), 1, false, glm::value_ptr(P));
+	glUniformMatrix4fv(sp->u("V"), 1, false, glm::value_ptr(V));
 
 	for (auto model : models) {
 		model->draw(glm::value_ptr(V), glm::value_ptr(P));
@@ -382,18 +382,14 @@ int main(void) {
 		tmp_step = (float)(walk_speed * glfwGetTime()) * calcDir(kat_x, kat_y);
 		if (tryToWalk(tmp_step))	pos += tmp_step;
 
-		if (canDrink == 0) {
-			pos.x += sin(distortion / 300) * counter / 8;
-			pos.z += cos(distortion / 400) * counter / 9;
-		}
+		pos.x += sin(distortion / 300) * counter / 8;
+		pos.z += cos(distortion / 400) * counter / 9;
 
 		glfwSetTime(0);
 		drawScene(window, distortion, kat_x, kat_y);
 
-		if (canDrink == 0) {
-			pos.x -= sin(distortion / 300) * counter / 8;
-			pos.z -= cos(distortion / 400) * counter / 9;
-		}
+		pos.x -= sin(distortion / 300) * counter / 8;
+		pos.z -= cos(distortion / 400) * counter / 9;
 
 		models[1]->M = glm::rotate(models[1]->M, -PI / 6000, glm::vec3(0.0f, 1.0f, 0.0f));
 

@@ -27,10 +27,10 @@
     <ClInclude Include="shaderprogram.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="wine.h">
+    <ClInclude Include="headers.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="headers.h">
+    <ClInclude Include="resource.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
   </ItemGroup>
@@ -47,39 +47,18 @@
     <ClCompile Include="shaderprogram.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="wine.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="f_constant.glsl">
-      <Filter>Pliki zasobów</Filter>
-    </None>
-    <None Include="f_lambert.glsl">
-      <Filter>Pliki zasobów</Filter>
-    </None>
-    <None Include="v_constant.glsl">
-      <Filter>Pliki zasobów</Filter>
-    </None>
-    <None Include="v_lambert.glsl">
-      <Filter>Pliki zasobów</Filter>
-    </None>
-    <None Include="f_colored.glsl">
-      <Filter>Pliki zasobów</Filter>
-    </None>
     <None Include="f_lamberttextured.glsl">
-      <Filter>Pliki zasobów</Filter>
-    </None>
-    <None Include="f_textured.glsl">
-      <Filter>Pliki zasobów</Filter>
-    </None>
-    <None Include="v_colored.glsl">
       <Filter>Pliki zasobów</Filter>
     </None>
     <None Include="v_lamberttextured.glsl">
       <Filter>Pliki zasobów</Filter>
     </None>
-    <None Include="v_textured.glsl">
+    <None Include="vertex_shader.glsl">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="fragment_shader.glsl">
       <Filter>Pliki zasobów</Filter>
     </None>
   </ItemGroup>

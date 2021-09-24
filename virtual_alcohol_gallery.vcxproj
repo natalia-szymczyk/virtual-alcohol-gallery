@@ -23,27 +23,20 @@
     <ClInclude Include="headers.h" />
     <ClInclude Include="lodepng.h" />
     <ClInclude Include="model.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="shaderprogram.h" />
-    <ClInclude Include="wine.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="lodepng.cpp" />
     <ClCompile Include="main_file.cpp" />
     <ClCompile Include="model.cpp" />
     <ClCompile Include="shaderprogram.cpp" />
-    <ClCompile Include="wine.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="f_colored.glsl" />
-    <None Include="f_constant.glsl" />
-    <None Include="f_lambert.glsl" />
+    <None Include="fragment_shader.glsl" />
     <None Include="f_lamberttextured.glsl" />
-    <None Include="f_textured.glsl" />
-    <None Include="v_colored.glsl" />
-    <None Include="v_constant.glsl" />
-    <None Include="v_lambert.glsl" />
+    <None Include="vertex_shader.glsl" />
     <None Include="v_lamberttextured.glsl" />
-    <None Include="v_textured.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

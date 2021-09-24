@@ -126,30 +126,30 @@ Model::Model(std::string filename, glm::mat4 ModelMatrix) {
 
 void Model::draw(glm::f32* V, glm::f32* P) {
 	for (int i = 0; i < mesh_vec->size(); i++) {
-		spLambertTextured->use();
+		sp->use();
 
-		glUniformMatrix4fv(spLambertTextured->u("P"), 1, false, P);
-		glUniformMatrix4fv(spLambertTextured->u("V"), 1, false, V);
-		glUniformMatrix4fv(spLambertTextured->u("M"), 1, false, glm::value_ptr(M));
+		glUniformMatrix4fv(sp->u("P"), 1, false, P);
+		glUniformMatrix4fv(sp->u("V"), 1, false, V);
+		glUniformMatrix4fv(sp->u("M"), 1, false, glm::value_ptr(M));
 
-		glEnableVertexAttribArray(spLambertTextured->a("vertex"));
-		glVertexAttribPointer(spLambertTextured->a("vertex"), 4, GL_FLOAT, false, 0, (*mesh_vec)[i].data());
+		glEnableVertexAttribArray(sp->a("vertex"));
+		glVertexAttribPointer(sp->a("vertex"), 4, GL_FLOAT, false, 0, (*mesh_vec)[i].data());
 
-		glEnableVertexAttribArray(spLambertTextured->a("normal"));
-		glVertexAttribPointer(spLambertTextured->a("normal"), 4, GL_FLOAT, false, 0, (*mesh_norm)[i].data());
+		glEnableVertexAttribArray(sp->a("normal"));
+		glVertexAttribPointer(sp->a("normal"), 4, GL_FLOAT, false, 0, (*mesh_norm)[i].data());
 
-		glEnableVertexAttribArray(spLambertTextured->a("texCoord"));
-		glVertexAttribPointer(spLambertTextured->a("texCoord"), 2, GL_FLOAT, false, 0, (*mesh_tex)[i].data());
+		glEnableVertexAttribArray(sp->a("texCoord"));
+		glVertexAttribPointer(sp->a("texCoord"), 2, GL_FLOAT, false, 0, (*mesh_tex)[i].data());
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, tex[i]);
-		glUniform1i(spLambertTextured->u("tex"), 0);
+		glUniform1i(sp->u("tex"), 0);
 
 		glDrawElements(GL_TRIANGLES, (*mesh_indices)[i].size(), GL_UNSIGNED_INT, (*mesh_indices)[i].data());
 
-		glDisableVertexAttribArray(spLambertTextured->a("vertex"));
-		glDisableVertexAttribArray(spLambertTextured->a("normal"));
-		glDisableVertexAttribArray(spLambertTextured->a("texCoord"));
+		glDisableVertexAttribArray(sp->a("vertex"));
+		glDisableVertexAttribArray(sp->a("normal"));
+		glDisableVertexAttribArray(sp->a("texCoord"));
 	}
 }
 
