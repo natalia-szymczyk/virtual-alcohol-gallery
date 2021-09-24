@@ -1,6 +1,6 @@
 #version 330
 
-#define NUMBER_OF_LIGHTS 5
+#define NUMBER_OF_LIGHTS 6
 
 struct Light {
 	vec4 color;
@@ -44,6 +44,13 @@ uniform Light lights[NUMBER_OF_LIGHTS] = {
 		vec4(1.0f, 1.0f, 1.0f, 1.0f),
 		vec4(0.0f, 1.0f, 0.0f, 0.0f),
 		vec4(0.0f, 10.0f, 0.0f, 1.0f),
+		1.0f,
+		1.0f
+	},
+	{
+		vec4(1.0f, 1.0f, 1.0f, 1.0f),
+		vec4(0.0f, -1.0f, 0.0f, 0.0f),
+		vec4(0.0f, 8.0f, 0.0f, 1.0f),
 		1.0f,
 		1.0f
 	}
