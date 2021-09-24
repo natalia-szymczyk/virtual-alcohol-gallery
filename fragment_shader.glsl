@@ -1,41 +1,75 @@
 #version 330
 
+#define NUMBER_OF_LIGHTS 5
 
-uniform sampler2D tex;
-uniform vec3 lightColor = vec3(0.9, 0.9, 0.9);
-uniform vec3 lightPos1 = vec3(100, 100, 100);
-uniform vec3 lightPos2 = vec3(100, 100, -100);
-uniform vec3 lightPos3 = vec3(-100, 100, 100);
-uniform vec3 lightPos4 = vec3(-100, 100, -100);
-uniform vec3 lightPos5 = vec3(0, -10, 0);
+struct Light {
+	vec4 color;
+	vec4 direction;
+	vec4 position;
+	float diffuseStrength;
+	float specularStrength;
+};
 
-in vec2 TexCoord;
-in vec3 icNorm;
-in vec3 icFragPos;
+uniform sampler2D textureMap;
+uniform Light lights[NUMBER_OF_LIGHTS] = {
+	{
+		vec4(1.0f, 1.0f, 1.0f, 1.0f),
+		vec4(-10.0f, 0.0f, -10.0f, 0.0f),
+		vec4(100.0f, 100.0f, 100.0f, 1.0f),
+		1.0f,
+		1.0f
+	},
+	{
+		vec4(1.0f, 1.0f, 1.0f, 1.0f),
+		vec4(-10.0f, 0.0f, 10.0f, 0.0f),
+		vec4(100.0f, 100.0f, -100.0f, 1.0f),
+		1.0f,
+		1.0f
+	},
+	{
+		vec4(1.0f, 1.0f, 1.0f, 1.0f),
+		vec4(10.0f, 0.0f, -10.0f, 0.0f),
+		vec4(-100.0f, 100.0f, 100.0f, 1.0f),
+		1.0f,
+		1.0f
+	},
+	{
+		vec4(1.0f, 1.0f, 1.0f, 1.0f),
+		vec4(10.0f, 0.0f, 10.0f, 0.0f),
+		vec4(-100.0f, 100.0f, -100.0f, 1.0f),
+		1.0f,
+		1.0f
+	},
+	{
+		vec4(1.0f, 1.0f, 1.0f, 1.0f),
+		vec4(0.0f, 1.0f, 0.0f, 0.0f),
+		vec4(0.0f, 10.0f, 0.0f, 1.0f),
+		1.0f,
+		1.0f
+	}
+};
 
-out vec4 pxColor;
+in vec4 fViewDir;
+in vec4 fVertex;
+in vec4 fNormal;
+in vec2 fTexCoord;
 
-void main()
-{
-    //light that is already present on the scence
-    vec4 ambient = vec4(lightColor * 0.1, 1);
+out vec4 pixelColor;
 
-    vec3 norm = normalize(icNorm);
+void main(void) {
+	vec4 nfNormal	= normalize(fNormal);
+	vec4 diffuse	= vec4(0.0f, 0.0f, 0.0f, 0.0f);
+	vec4 specular	= vec4(0.0f, 0.0f, 0.0f, 0.0f);
 
-    vec3 lightDir1 = normalize(vec3(-10, 0, -10));
-    vec4 diffuse1 = vec4( max(dot(norm, lightDir1), 0) * lightColor, 1 );
-    
-    vec3 lightDir2 = normalize(vec3(-10, 0, 10));
-    vec4 diffuse2 = vec4( max(dot(norm, lightDir2), 0) * lightColor, 1 );
+	for (int i = 0; i < NUMBER_OF_LIGHTS; i++) {
+		vec4  lightDirection	= normalize(lights[i].direction);
+		vec4  lightColor		= normalize(lights[i].color);
+		float diffuseStrength	= lights[i].diffuseStrength;
+		float specularStrength	= lights[i].specularStrength;
 
-    vec3 lightDir3 = normalize(vec3(10, 0, -10));
-    vec4 diffuse3 = vec4( max(dot(norm, lightDir3), 0) * lightColor, 1 );
-    
-    vec3 lightDir4 = normalize(vec3(10, 0, 10));
-    vec4 diffuse4 = vec4( max(dot(norm, lightDir4), 0) * lightColor, 1 );
+		diffuse		= diffuse + max(dot(nfNormal, lightDirection), 0.0f) * lightColor * diffuseStrength;
+		specular	= specular + pow(max(dot(fViewDir, reflect(-lightDirection, nfNormal)), 0.0f), 32.0f) * lightColor * specularStrength;
+	}
 
-    vec3 lightDir5 = normalize(lightPos5 - icFragPos);
-    vec4 diffuse5 = vec4( max(dot(norm, lightDir5), 0) * lightColor, 1);
-
-	pxColor = texture(tex, TexCoord) * ( ambient + ((diffuse1 + diffuse2 + diffuse3 + diffuse4 + diffuse5) * 0.8) );
+	pixelColor = texture(textureMap, fTexCoord) * (diffuse + specular);
 }
