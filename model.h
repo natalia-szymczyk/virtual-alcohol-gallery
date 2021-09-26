@@ -31,13 +31,14 @@ private:
 
 public:
 	glm::mat4 M;
+	std::string name;
 	static std::unordered_map<std::string, GLuint> tex_global;
 	static std::unordered_map<std::string, std::vector<std::vector<glm::vec4>>> mesh_vec_global;
 	static std::unordered_map<std::string, std::vector<std::vector<glm::vec4>>> mesh_norm_global;
 	static std::unordered_map<std::string, std::vector<std::vector<glm::vec2>>> mesh_tex_global;
 	static std::unordered_map<std::string, std::vector<std::vector<unsigned int>>> mesh_indices_global;
 
-	Model(std::string filename, glm::mat4 ModelMatrix);
+	Model(std::string filename, glm::mat4 ModelMatrix, std::string ModelName);
 	GLuint readTexture(const char* filename);
 	void draw(glm::f32* V, glm::f32* P);
 	void loadTextures(std::string filename, int maxIndex, std::string ini_file, std::vector<GLuint>* vec);

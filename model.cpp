@@ -24,8 +24,9 @@ std::unordered_map<std::string, std::vector<std::vector<glm::vec4>>> Model::mesh
 std::unordered_map<std::string, std::vector<std::vector<glm::vec2>>> Model::mesh_tex_global;
 std::unordered_map<std::string, std::vector<std::vector<unsigned int>>> Model::mesh_indices_global;
 
-Model::Model(std::string filename, glm::mat4 ModelMatrix) {
+Model::Model(std::string filename, glm::mat4 ModelMatrix, std::string ModelName) {
 	M = ModelMatrix;
+	name = ModelName;
 	auto it = mesh_vec_global.find(filename);
 
 	if (it != mesh_vec_global.end()) {
