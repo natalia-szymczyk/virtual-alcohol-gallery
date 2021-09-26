@@ -49,7 +49,7 @@ public:
 //extern ShaderProgram* spLambert;
 //extern ShaderProgram* spTextured;
 //extern ShaderProgram* spColored;
-extern ShaderProgram* spLambertTextured;
+//extern ShaderProgram* spLambertTextured;
 extern ShaderProgram* sp;
 
 void initShaders();

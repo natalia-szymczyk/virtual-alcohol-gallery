@@ -37,23 +37,13 @@ Model::Model(std::string filename, glm::mat4 ModelMatrix) {
 		std::string str = filename.substr(0, filename.find("."));
 
 		loadTextures(str, mesh_vec->size(), "texture.ini", &tex);
-		loadTextures(str, mesh_vec->size(), "texture_norm.ini", &norm);
-		loadTextures(str, mesh_vec->size(), "texture_spec.ini", &specular);
-		loadTextures(str, mesh_vec->size(), "texture_height.ini", &height);
-
-		/*
-		std::wcout << "mesh_vec_count: " << mesh_vec_global.size() << " mesh_vec_this_file_cout: " << mesh_vec_global[filename].size() << std::endl;
-		std::wcout << "mesh_norm_count: " << mesh_norm_global.size() << " mesh_norm_this_file_cout: " << mesh_norm_global[filename].size() << std::endl;
-		std::wcout << "mesh_tex_count: " << mesh_tex_global.size() << " mesh_tex_this_file_cout: " << mesh_tex_global[filename].size() << std::endl;
-		std::wcout << "mesh_indices_count: " << mesh_indices_global.size() << " mesh_indices_this_file_cout: " << mesh_indices_global[filename].size() << std::endl;
-		*/
 
 		return;
 	}
 
 	Assimp::Importer importer;
 
-	const aiScene* scene = importer.ReadFile(filename, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace | aiProcess_GenSmoothNormals);
+	const aiScene* scene = importer.ReadFile(filename, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals);
 
 	std::cout << importer.GetErrorString() << std::endl;
 
@@ -91,37 +81,19 @@ Model::Model(std::string filename, glm::mat4 ModelMatrix) {
 
 		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 
-		//for (int i = 0; i < 19; i++) {
-		//	if (material->GetTextureCount(aiTextureType(i))) {
-		//		std::cout << i << " ::: " << material->GetTextureCount(aiTextureType(i)) << std::endl;
-		//	}
-		//}
-
 		aiString mat_str;
 
 		material->GetTexture(aiTextureType_SPECULAR, 0, &mat_str);
-
-		//std::cout << k << " : " << mat_str.C_Str() << std::endl;
 	}
 
 	std::string str = filename.substr(0, filename.find("."));
 
 	loadTextures(str, scene->mNumMeshes, "texture.ini", &tex);
-	loadTextures(str, scene->mNumMeshes, "texture_norm.ini", &norm);
-	loadTextures(str, scene->mNumMeshes, "texture_spec.ini", &specular);
-	loadTextures(str, scene->mNumMeshes, "texture_height.ini", &height);
 
 	mesh_vec = mesh_vec_ptr;
 	mesh_norm = mesh_norm_ptr;
 	mesh_tex = mesh_tex_ptr;
 	mesh_indices = mesh_indices_ptr;
-
-	/*
-	std::wcout << "mesh_vec_count: " << mesh_vec_global.size() << " mesh_vec_this_file_cout: " << mesh_vec_global[filename].size() << std::endl;
-	std::wcout << "mesh_norm_count: " << mesh_norm_global.size() << " mesh_norm_this_file_cout: " << mesh_norm_global[filename].size() << std::endl;
-	std::wcout << "mesh_tex_count: " << mesh_tex_global.size() << " mesh_tex_this_file_cout: " << mesh_tex_global[filename].size() << std::endl;
-	std::wcout << "mesh_indices_count: " << mesh_indices_global.size() << " mesh_indices_this_file_cout: " << mesh_indices_global[filename].size() << std::endl;
-	*/
 }
 
 void Model::draw(glm::f32* V, glm::f32* P) {
@@ -230,12 +202,6 @@ void Model::loadTextures(std::string filename, int maxIndex, std::string ini_fil
 
 	std::sort(file_names.begin(), file_names.end());
 
-	/*
-	for (auto i : file_names) {
-		std::cout << i.first << " : " << i.second << std::endl;
-	}
-	*/
-
 	int j = 0;
 
 	for (int i = 0; i < maxIndex; i++) {
@@ -258,6 +224,4 @@ void Model::loadTextures(std::string filename, int maxIndex, std::string ini_fil
 			vec->push_back(-1);
 		}
 	}
-
-	//std::cout << "tex_global_size: " << tex_global.size() << std::endl;
 }

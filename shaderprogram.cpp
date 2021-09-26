@@ -24,7 +24,7 @@ Place, Fifth Floor, Boston, MA  02110 - 1301  USA
 //ShaderProgram *spConstant;
 //ShaderProgram* spColored;
 //ShaderProgram* spTextured;
-ShaderProgram* spLambertTextured;
+//ShaderProgram* spLambertTextured;
 ShaderProgram* sp;
 
 
@@ -33,7 +33,7 @@ void initShaders() {
 	//spConstant = new ShaderProgram("v_constant.glsl", NULL, "f_constant.glsl");
 	//spTextured = new ShaderProgram("v_textured.glsl", NULL, "f_textured.glsl");
 	//spColored = new ShaderProgram("v_colored.glsl", NULL, "f_colored.glsl");
-	spLambertTextured = new ShaderProgram("v_lamberttextured.glsl", NULL, "f_lamberttextured.glsl");
+	//spLambertTextured = new ShaderProgram("v_lamberttextured.glsl", NULL, "f_lamberttextured.glsl");
 	sp = new ShaderProgram("vertex_shader.glsl", NULL, "fragment_shader.glsl");
 }
 
@@ -42,7 +42,7 @@ void freeShaders() {
 	//delete spConstant;
 	//delete spTextured;
 	//delete spColored;
-	delete spLambertTextured;
+	//delete spLambertTextured;
 	delete sp;
 }
 

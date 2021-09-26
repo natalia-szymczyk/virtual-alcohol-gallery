@@ -28,9 +28,6 @@ private:
 	std::vector<std::vector<unsigned int>>* mesh_indices;
 
 	std::vector<GLuint> tex;
-	std::vector<GLuint> specular;
-	std::vector<GLuint> norm;
-	std::vector<GLuint> height;
 
 public:
 	glm::mat4 M;
