@@ -40,6 +40,6 @@ public:
 
 	Model(std::string filename, glm::mat4 ModelMatrix, std::string ModelName);
 	GLuint readTexture(const char* filename);
-	void draw(glm::f32* V, glm::f32* P);
+	void draw(glm::mat4 P, glm::mat4 V);
 	void loadTextures(std::string filename, int maxIndex, std::string ini_file, std::vector<GLuint>* vec);
 };

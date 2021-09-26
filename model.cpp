@@ -97,12 +97,12 @@ Model::Model(std::string filename, glm::mat4 ModelMatrix, std::string ModelName)
 	mesh_indices = mesh_indices_ptr;
 }
 
-void Model::draw(glm::f32* V, glm::f32* P) {
+void Model::draw(glm::mat4 P, glm::mat4 V) {
 	for (int i = 0; i < mesh_vec->size(); i++) {
 		sp->use();
 
-		glUniformMatrix4fv(sp->u("P"), 1, false, P);
-		glUniformMatrix4fv(sp->u("V"), 1, false, V);
+		glUniformMatrix4fv(sp->u("P"), 1, false, glm::value_ptr(P));
+		glUniformMatrix4fv(sp->u("V"), 1, false, glm::value_ptr(V));
 		glUniformMatrix4fv(sp->u("M"), 1, false, glm::value_ptr(M));
 
 		glEnableVertexAttribArray(sp->a("vertex"));

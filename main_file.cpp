@@ -30,13 +30,14 @@ int height			= 720;
 int width			= 1280;
 
 float distortion	= 0.0f;
-float speed_x		= 0; //[radiany/s]
-float speed_y		= 0; //[radiany/s]
+float speed_x		= 0;				//[radiany/s]
+float speed_y		= 0;				//[radiany/s]
 float walk_speed	= 0;
 float ratio			= width / height;
 
 using namespace std;
 
+//Funkcja wyszukiwania modelu
 Model* findModel(string modelName) {
 	for (auto model : models) {
 		if (model->name == modelName) {
@@ -438,7 +439,7 @@ void drawScene(GLFWwindow* window, float distortion, float angle_x, float angle_
 	glUniformMatrix4fv(sp->u("V"), 1, false, glm::value_ptr(V));
 
 	for (auto model : models) {
-		model->draw(glm::value_ptr(V), glm::value_ptr(P));
+		model->draw(P, V);
 	}
 
 	glfwSwapBuffers(window);
