@@ -29,10 +29,11 @@ int drinkingStatus	= 0;
 int height			= 720;
 int width			= 1280;
 
+float distortion	= 0.0f;
 float speed_x		= 0; //[radiany/s]
 float speed_y		= 0; //[radiany/s]
 float walk_speed	= 0;
-float ratio		= width / height;
+float ratio			= width / height;
 
 using namespace std;
 
@@ -76,18 +77,22 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 			walk_speed = -10;
 		}
 		if (key == GLFW_KEY_P && cameraPosition.x <= -12 && cameraPosition.z >= 14) {
-			currentDrink = 7;
-			counter = counter + 1;
-			drinkingStatus = 1;
+			currentDrink	= 7;
+			counter			= counter + 1;
+			drinkingStatus	= 1;
 		}
 		if (key == GLFW_KEY_K && cameraPosition.x <= -12 && cameraPosition.z >= 14) {
-			currentDrink = 6;
-			counter = counter + 1;
-			drinkingStatus = 1;
+			currentDrink	= 6;
+			counter			= counter + 1;
+			drinkingStatus	= 1;
 		}
-		//if (key == GLFW_KEY_W) {
-		//	cout << cameraPosition.x << " " << cameraPosition.y << " " << cameraPosition.z << endl;
-		//}
+		if (key == GLFW_KEY_W) {
+			cout << cameraPosition.x << " " << cameraPosition.y << " " << cameraPosition.z << endl;
+		}
+		if (key == GLFW_KEY_R) {
+			counter		= 0;
+			distortion  = 0.0f;
+		}
 	}
 	if (action == GLFW_RELEASE) {
 		if (key == GLFW_KEY_LEFT) {
@@ -354,7 +359,7 @@ int tryToWalk(glm::vec3 step) {
 	if (cameraPosition.x + step.x <= 18 && cameraPosition.x + step.x >= -21 && cameraPosition.z + step.z <= 16.7 && cameraPosition.z + step.z >= -22) {
 		return 1;
 	}
-	else if (cameraPosition.x + step.x <= 5.5 && cameraPosition.x + step.x >= -25 && cameraPosition.z + step.z <= -6 && cameraPosition.z + step.z >= -29) {
+	else if (cameraPosition.x + step.x <= 5.5 && cameraPosition.x + step.x >= -23.5 && cameraPosition.z + step.z <= -6 && cameraPosition.z + step.z >= -29) {
 		return 1;
 	}
 	else if (cameraPosition.x + step.x <= 23.5 && cameraPosition.x + step.x >= 18 && cameraPosition.z + step.z <= 16.7 && cameraPosition.z + step.z >= 5.8) {
@@ -399,8 +404,6 @@ int main(void) {
 	float it_K = 0.1f, step_K = 1.0f, end_K = 20.0f;
 	float it_P = 0.1f, step_P = 1.0f, end_P = 0.4f;
 
-	float distortion = 0.1f;
-
 	float angle		= 0;
 	float angle_x	= 0;
 	float angle_y	= 0;
@@ -423,14 +426,14 @@ int main(void) {
 
 		cameraPosition.y = 1.0f;
 
-		cameraPosition.x = cameraPosition.x + sin(distortion / 300) * counter / 8;
-		cameraPosition.z = cameraPosition.z + cos(distortion / 400) * counter / 9;
+		cameraPosition.x = cameraPosition.x + min(sin(distortion / 300) * counter / 8, 1.0f);
+		cameraPosition.z = cameraPosition.z + min(cos(distortion / 400) * counter / 9, 1.0f);
 
 		glfwSetTime(0);
 		drawScene(window, distortion, angle_x, angle_y);
 
-		cameraPosition.x = cameraPosition.x - sin(distortion / 300) * counter / 8;
-		cameraPosition.z = cameraPosition.z - cos(distortion / 400) * counter / 9;
+		cameraPosition.x = cameraPosition.x - min(sin(distortion / 300) * counter / 8, 1.0f);
+		cameraPosition.z = cameraPosition.z - min(cos(distortion / 400) * counter / 9, 1.0f);
 
 		models[1]->M = glm::rotate(models[1]->M, PI / 6000, glm::vec3(0.0f, 1.0f, 0.0f));
 

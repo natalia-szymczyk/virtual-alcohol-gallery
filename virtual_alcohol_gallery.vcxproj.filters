@@ -49,12 +49,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="f_lamberttextured.glsl">
-      <Filter>Pliki zasobów</Filter>
-    </None>
-    <None Include="v_lamberttextured.glsl">
-      <Filter>Pliki zasobów</Filter>
-    </None>
     <None Include="vertex_shader.glsl">
       <Filter>Pliki zasobów</Filter>
     </None>
