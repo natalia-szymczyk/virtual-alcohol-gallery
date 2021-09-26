@@ -146,104 +146,168 @@ void initModels() {
 	glm::mat4 M = glm::mat4(1.0f);
 
 	glm::mat4 M0 = M;
+
 	M0 = glm::scale(M0, glm::vec3(0.1, 0.1, 0.1));
-	models.push_back(new Model("floor.fbx", M0, ""));
+
+	Model* floor = new Model("floor.fbx", M0, "");
+
+	models.push_back(floor);
 
 	glm::mat4 M1 = M;
+
 	M1 = glm::scale(M1, glm::vec3(200, 200, 200));
 	M1 = glm::translate(M1, glm::vec3(0, -0.15f, 0));
-	models.push_back(new Model("sphere.fbx", M1, "sphere"));
+
+	Model* sphere = new Model("sphere.fbx", M1, "sphere");
+
+	models.push_back(sphere);
 
 	glm::mat4 M2 = M;
+
 	M2 = glm::translate(M2, glm::vec3(0.0f, -20.0f, 0.0f));
 	M2 = glm::scale(M2, glm::vec3(500.0f, 0.1f, 500.0f));
-	models.push_back(new Model("cube.fbx", M2, ""));
+
+	Model* cube = new Model("cube.fbx", M2, "");
+
+	models.push_back(cube);
 
 	glm::mat4 M3 = M;
+
 	M3 = glm::rotate(M3, -PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
 	M3 = glm::scale(M3, glm::vec3(1.0f, 1.0f, 3.0f));
 	M3 = glm::translate(M3, glm::vec3(50.0f, 30.0f, -7.0f));
-	models.push_back(new Model("tree.fbx", M3, ""));
+
+	Model* tree = new Model("tree.fbx", M3, "");
+
+	models.push_back(tree);
 
 	glm::mat4 M4 = M0;
+
 	M4 = glm::translate(M4, glm::vec3(-20, -150, 250));
 	M4 = glm::rotate(M4, PI, glm::vec3(0.0f, 1.0f, 0.0f));
 	M4 = glm::rotate(M4, -PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
-	models.push_back(new Model("sofa.fbx", M4, ""));
+
+	Model* sofa = new Model("sofa.fbx", M4, "");
+
+	models.push_back(sofa);
 
 	glm::mat4 M5 = M0;
+
 	M5 = glm::translate(M5, glm::vec3(-220, -50, 230));
 	M5 = glm::rotate(M5, PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
 	M5 = glm::scale(M5, glm::vec3(60, 60, 100));
-	models.push_back(new Model("barrel.fbx", M5, ""));
+
+	Model* barrel = new Model("barrel.fbx", M5, "");
+
+	models.push_back(barrel);
 
 	glm::mat4 M6 = M5;
+
 	M6 = glm::scale(M6, glm::vec3(0.02, 0.02, 0.02));
 	M6 = glm::translate(M6, glm::vec3(8, -8, 1));
 	M6 = glm::rotate(M6, PI / 4, glm::vec3(0.0f, 0.0f, 1.0f));
 	M6 = glm::rotate(M6, -PI, glm::vec3(1.0f, 0.0f, 0.0f));
-	models.push_back(new Model("glass.FBX", M6, "glass"));
+
+	Model* glass = new Model("glass.FBX", M6, "glass");
+
+	models.push_back(glass);
 
 	glm::mat4 M7 = M5;
+
 	M7 = glm::scale(M7, glm::vec3(2, 2, 1.7));
 	M7 = glm::translate(M7, glm::vec3(-0.05, -0.05, 0.02));
 	M7 = glm::rotate(M7, PI, glm::vec3(1.0f, 0.0f, 0.0f));
 	M7 = glm::rotate(M7, -PI / 4, glm::vec3(0.0f, 0.0f, 1.0f));
-	models.push_back(new Model("bottle_beer.fbx", M7, "bottle_beer"));
+
+	Model* bottle_beer = new Model("bottle_beer.fbx", M7, "bottle_beer");
+
+	models.push_back(bottle_beer);
 
 	glm::mat4 M8 = M5;
+
 	M8 = glm::scale(M8, glm::vec3(0.065, 0.065, 0.065));
 	M8 = glm::translate(M8, glm::vec3(1.5, 2, -0.4));
 	M8 = glm::rotate(M8, -PI, glm::vec3(1.0f, 0.0f, 0.0f));
 	M8 = glm::rotate(M8, -55 * PI / 180, glm::vec3(0.0f, 0.0f, 1.0f));
-	models.push_back(new Model("bottle_wine.fbx", M8, ""));
+
+	Model* bottle_wine = new Model("bottle_wine.fbx", M8, "");
+
+	models.push_back(bottle_wine);
 
 	glm::mat4 M9 = M0;
+
 	M9 = glm::translate(M9, glm::vec3(190, -120, 250));
 	M9 = glm::rotate(M9, -PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
 	M9 = glm::scale(M9, glm::vec3(8, 8, 8));
-	models.push_back(new Model("monstera.fbx", M9, ""));
+
+	Model* monstera = new Model("monstera.fbx", M9, "");
+
+	models.push_back(monstera);
 
 	glm::mat4 M10 = M0;
+
 	M10 = glm::translate(M10, glm::vec3(160, -150, -290));
 	M10 = glm::rotate(M10, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
 	M10 = glm::rotate(M10, PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
 	M10 = glm::scale(M10, glm::vec3(2, 2, 2));
-	models.push_back(new Model("distiller.fbx", M10, ""));
+
+	Model* distiller = new Model("distiller.fbx", M10, "");
+
+	models.push_back(distiller);
 
 	glm::mat4 M11 = M0;
+
 	M11 = glm::translate(M11, glm::vec3(0, 90, 0));
 	M11 = glm::rotate(M11, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
 	M11 = glm::scale(M11, glm::vec3(5, 5, 12));
-	models.push_back(new Model("lamp.fbx", M11, ""));
+
+	Model* lamp = new Model("lamp.fbx", M11, "");
+
+	models.push_back(lamp);
 
 	glm::mat4 M12 = M0;
+
 	M12 = glm::rotate(M12, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
 	M12 = glm::rotate(M12, PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
 	M12 = glm::translate(M12, glm::vec3(-330, 22, 50));
 	M12 = glm::scale(M12, glm::vec3(2, 2, 2));
-	models.push_back(new Model("painting.fbx", M12, ""));
+
+	Model* painting = new Model("painting.fbx", M12, "");
+
+	models.push_back(painting);
 
 	glm::mat4 M13 = M0;
+
 	M13 = glm::rotate(M13, 3 * PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
 	M13 = glm::rotate(M13, 3 * PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
 	M13 = glm::translate(M13, glm::vec3(-330, -170, 50));
 	M13 = glm::scale(M13, glm::vec3(2, 1, 2));
-	models.push_back(new Model("painting_2.fbx", M13, ""));
+
+	Model* painting_2 = new Model("painting_2.fbx", M13, "");
+
+	models.push_back(painting_2);
 
 	glm::mat4 M14 = M0;
+
 	M14 = glm::translate(M14, glm::vec3(-240, -150, 0));
 	M14 = glm::rotate(M14, -PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
 	M14 = glm::rotate(M14, PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
 	M14 = glm::scale(M14, glm::vec3(50, 50, 70));
-	models.push_back(new Model("shelf.fbx", M14, ""));
+
+	Model* shelf = new Model("shelf.fbx", M14, "");
+
+	models.push_back(shelf);
 
 	glm::mat4 M15 = M0;
+
 	M15 = glm::translate(M15, glm::vec3(240, -150, 0));
 	M15 = glm::rotate(M15, -PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
 	M15 = glm::rotate(M15, -PI / 2, glm::vec3(0.0f, 0.0f, 1.0f));
 	M15 = glm::scale(M15, glm::vec3(50, 50, 70));
-	models.push_back(new Model("shelf.fbx", M15, ""));
+
+	Model* shelf_2 = new Model("shelf.fbx", M15, "");
+
+	models.push_back(shelf_2);
 
 	std::vector<glm::mat4> M_beers = { M14, M14, M14, M14, M14, M14, M14, M14, M14 };
 	float it_f = -0.42;
@@ -252,7 +316,10 @@ void initModels() {
 		m = glm::scale(m, glm::vec3(2, 2, 2));
 		m = glm::translate(m, glm::vec3(it_f, 0, 0.45));
 		m = glm::rotate(m, PI, glm::vec3(0.0f, 0.0f, 1.0f));
-		models.push_back(new Model("bottle_beer.fbx", m, ""));
+
+		Model* tmp = new Model("bottle_beer.fbx", m, "");
+
+		models.push_back(tmp);
 
 		it_f = it_f + 0.10;
 	}
@@ -265,7 +332,10 @@ void initModels() {
 		m = glm::translate(m, glm::vec3(it, 3, 43));
 		m = glm::rotate(m, PI / 2, glm::vec3(1.0f, 0.0f, 0.0f));
 		m = glm::rotate(m, PI / 2, glm::vec3(0.0f, 1.0f, 0.0f));
-		models.push_back(new Model("gin.fbx", m, ""));
+
+		Model* tmp = new Model("gin.fbx", m, "");
+
+		models.push_back(tmp);
 
 		it = it + 20;
 	}
@@ -277,7 +347,10 @@ void initModels() {
 		m = glm::scale(m, glm::vec3(0.065, 0.065, 0.065));
 		m = glm::translate(m, glm::vec3(it, 0, 26));
 		m = glm::rotate(m, PI, glm::vec3(0.0f, 0.0f, 1.0f));
-		models.push_back(new Model("bottle_wine.fbx", m, ""));
+
+		Model* tmp = new Model("bottle_wine.fbx", m, "");
+
+		models.push_back(tmp);
 
 		it = it + 4;
 	}
@@ -289,7 +362,10 @@ void initModels() {
 		m = glm::scale(m, glm::vec3(0.065, 0.065, 0.065));
 		m = glm::translate(m, glm::vec3(it, 0, 26));
 		m = glm::rotate(m, PI, glm::vec3(0.0f, 0.0f, 1.0f));
-		models.push_back(new Model("bottle_wine_1.fbx", m, ""));
+
+		Model* tmp = new Model("bottle_wine_1.fbx", m, "");
+
+		models.push_back(tmp);
 
 		it = it + 3;
 	}
@@ -301,7 +377,10 @@ void initModels() {
 		m = glm::scale(m, glm::vec3(0.065, 0.065, 0.065));
 		m = glm::translate(m, glm::vec3(it, 0, 15));
 		m = glm::rotate(m, PI, glm::vec3(0.0f, 0.0f, 1.0f));
-		models.push_back(new Model("bottle_wine_2.fbx", m, ""));
+
+		Model* tmp = new Model("bottle_wine_2.fbx", m, "");
+
+		models.push_back(tmp);
 
 		it = it + 3;
 	}
@@ -313,7 +392,10 @@ void initModels() {
 		m = glm::scale(m, glm::vec3(0.065, 0.065, 0.065));
 		m = glm::translate(m, glm::vec3(it, 0, 4.5));
 		m = glm::rotate(m, PI, glm::vec3(0.0f, 0.0f, 1.0f));
-		models.push_back(new Model("bottle_wine_3.fbx", m, ""));
+
+		Model* tmp = new Model("bottle_wine_3.fbx", m, "");
+
+		models.push_back(tmp);
 
 		it = it + 3;
 	}
@@ -444,7 +526,6 @@ int main(void) {
 		cameraPosition.z = cameraPosition.z - min(cos(distortion / 400) * counter / 9, 1.0f);
 
 		findModel("sphere")->M = glm::rotate(findModel("sphere")->M, PI / 6000, glm::vec3(0.0f, 1.0f, 0.0f));
-		//models[1]->M = glm::rotate(models[1]->M, PI / 6000, glm::vec3(0.0f, 1.0f, 0.0f));
 
 		if (currentDrink == 7 && drinkingStatus == 1) {
 			if (it_P < end_P) {
