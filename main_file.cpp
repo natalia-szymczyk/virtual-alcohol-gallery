@@ -30,8 +30,8 @@ int height			= 720;
 int width			= 1280;
 
 float distortion	= 0.0f;
-float speed_x		= 0;				//[radiany/s]
-float speed_y		= 0;				//[radiany/s]
+float speed_x		= 0;
+float speed_y		= 0;
 float walk_speed	= 0;
 float ratio			= width / height;
 

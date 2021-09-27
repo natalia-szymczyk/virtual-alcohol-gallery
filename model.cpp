@@ -15,7 +15,6 @@
 //jeśli nie - napisz do Free Software Foundation, Inc., 59 Temple
 //Place, Fifth Floor, Boston, MA  02110 - 1301  USA
 
-
 #include <Model.h>
 
 std::unordered_map<std::string, GLuint> Model::tex_global;

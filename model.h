@@ -21,7 +21,6 @@
 
 class Model {
 private:
-	//wektor współrzędnych wierzchołków
 	std::vector<std::vector<glm::vec4>>* mesh_vec;
 	std::vector<std::vector<glm::vec4>>* mesh_norm;
 	std::vector<std::vector<glm::vec2>>* mesh_tex;
